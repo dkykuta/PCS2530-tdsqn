@@ -37,48 +37,7 @@ public class MainActivity extends SimpleBaseGameActivity {
 
 	@Override
 	protected Scene onCreateScene() {
-		Sprite bgmapa1 = new Sprite(0, 0,
-				ImageAlligator3000.getTexture(TextureName.MAPA1_BG),
-				ImageAlligator3000.getVertexBufferObjectManager()) {
-			
-			float antx = 0;
-			float anty = 0;
-			
-			float posx = 0;
-			float posy = 0;
-			
-			@Override
-			public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
-					float pTouchAreaLocalX, float pTouchAreaLocalY) {
-				if (pSceneTouchEvent.isActionDown()) {
-					Log.i("AEHO.MainActivity", "ActionDown");
-					antx = pSceneTouchEvent.getX();
-					anty = pSceneTouchEvent.getY();
-					
-					posx = this.getX();
-					posy = this.getY();
-				}
-				else if(pSceneTouchEvent.isActionUp()) {
-					Log.i("AEHO.MainActivity", "ActionUp");
-				}
-				else if(pSceneTouchEvent.isActionMove()) {
-					Log.i("AEHO.MainActivity", "ActionMove");
-					float newx = posx + (pSceneTouchEvent.getX() - antx);
-					float newy = posy + (pSceneTouchEvent.getY() - anty);
-					
-					if (newx > 0)
-						newx = 0;
-					if (newy > 0)
-						newy = 0;
-					
-					this.setPosition(newx, newy);
-				}
-				
-				return true;
-			}
-		};
-		
-		LevelScene scene = new LevelScene(bgmapa1);
+		LevelScene scene = new LevelScene(TextureName.MAPA1_BG);
 		
 		
 		
