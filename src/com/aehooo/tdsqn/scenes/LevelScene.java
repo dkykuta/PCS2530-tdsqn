@@ -2,71 +2,60 @@ package com.aehooo.tdsqn.scenes;
 
 import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
-import android.util.Log;
-
+import com.aehooo.tdsqn.entity.unit.Zombie;
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
 import com.aehooo.tdsqn.resources.TextureName;
+import com.aehooo.tdsqn.scenes.composition.LevelBackground;
+import com.aehooo.tdsqn.utils.Vector2D;
 
 public class LevelScene extends Scene {
-	
-	public LevelScene(String bgname) {
+
+	private Sprite bg;
+	private Sprite barraLateral;
+
+	public LevelScene(final TextureName bgname) {
 		super();
-		
-		Sprite bg = new Sprite(0, 0,
+
+		this.setTouchAreaBindingOnActionDownEnabled(true);
+		this.setTouchAreaBindingOnActionMoveEnabled(true);
+
+		this.bg = new LevelBackground(-600, -480,
 				ImageAlligator3000.getTexture(bgname),
+				ImageAlligator3000.getVertexBufferObjectManager());
+
+		this.bg.registerEntityModifier(new MoveModifier(3, -600, 100, -480, 0));
+
+		this.attachChild(this.bg);
+
+		this.barraLateral = new Sprite(0, 0,
+				ImageAlligator3000.getTexture(TextureName.BARRA_LATERAL),
 				ImageAlligator3000.getVertexBufferObjectManager()) {
-			
-			float antx = 0;
-			float anty = 0;
-			
-			float posx = 0;
-			float posy = 0;
-			
 			@Override
-			public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
-					float pTouchAreaLocalX, float pTouchAreaLocalY) {
-				if (pSceneTouchEvent.isActionDown()) {
-					Log.i("AEHO.LevelScene", "ActionDown");
-					antx = pSceneTouchEvent.getX();
-					anty = pSceneTouchEvent.getY();
-					
-					posx = this.getX();
-					posy = this.getY();
-				}
-				else if(pSceneTouchEvent.isActionUp()) {
-					Log.i("AEHO.LevelScene", "ActionUp");
-				}
-				else if(pSceneTouchEvent.isActionMove()) {
-					Log.i("AEHO.LevelScene", "ActionMove");
-					float newx = posx + (pSceneTouchEvent.getX() - antx);
-					float newy = posy + (pSceneTouchEvent.getY() - anty);
-					
-					if (newx > 0)
-						newx = 0;
-					if (newy > 0)
-						newy = 0;
-					
-					if (newx - 800 < -1400) {
-						newx = -600;
-					}
-					if (newy - 480 < -960) {
-						newy = -480;
-					}
-					
-					this.setPosition(newx, newy);
-				}
-				
+			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
+					final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
 				return true;
 			}
 		};
-		
-		this.attachChild(bg);
-		registerTouchArea(bg);
-		this.setTouchAreaBindingOnActionDownEnabled(true);
-		this.setTouchAreaBindingOnActionMoveEnabled(true);
+		this.attachChild(this.barraLateral);
+
+		/*
+		 * AnimatedSprite zz = new AnimatedSprite(200, 200,
+		 * ImageAlligator3000.getTiledTexture(TextureName.ZOMBIE),
+		 * ImageAlligator3000.getVertexBufferObjectManager()); zz.animate(100);
+		 */
+
+		Zombie zz = new Zombie(new Vector2D(500, 500));
+		zz.animateLinha(0);
+
+		this.bg.attachChild(zz.getSprite());
+		this.registerTouchArea(zz.getSprite());
+
+		// this.bg.attachChild(zz);
+
+		this.registerTouchArea(this.barraLateral);
+		this.registerTouchArea(this.bg);
 	}
 }

@@ -1,8 +1,5 @@
 package com.aehooo.tdsqn.resources;
 
-public class TextureName {
-	private TextureName() {
-	}
-	
-	public static String MAPA1_BG = "MAPA1_BG";
+public enum TextureName {
+	MAPA1_BG, BARRA_LATERAL, ZOMBIE;
 }
