@@ -6,10 +6,10 @@ import com.aehooo.tdsqn.annotations.TextureInfo;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.utils.Vector2D;
 
-@TextureInfo(TextureName.ZOMBIE)
+@TextureInfo(name = TextureName.ZOMBIE)
 public class Zombie extends BasicUnit {
 
-	public Zombie(final Vector2D pos) {
+	public Zombie(final Vector2D pos) throws Exception {
 		super(pos);
 	}
 

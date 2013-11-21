@@ -1,19 +1,17 @@
 package com.aehooo.tdsqn.entity;
 
-import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.texture.region.ITiledTextureRegion;
+import org.andengine.opengl.texture.region.ITextureRegion;
 
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
 
-public class ThisGameAnimatedSprite extends AnimatedSprite implements
-		IThisGameSprite {
-
+public class ThisGameSprite extends Sprite implements IThisGameSprite {
 	private ITouchHandler touchHandler;
 
-	public ThisGameAnimatedSprite(final float pX, final float pY,
-			final ITiledTextureRegion pTiledTextureRegion) {
-		super(pX, pY, pTiledTextureRegion, ImageAlligator3000
+	public ThisGameSprite(final float pX, final float pY,
+			final ITextureRegion pTextureRegion) {
+		super(pX, pY, pTextureRegion, ImageAlligator3000
 				.getVertexBufferObjectManager());
 	}
 

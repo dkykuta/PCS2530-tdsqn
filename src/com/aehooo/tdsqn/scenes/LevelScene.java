@@ -5,6 +5,9 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
+import android.util.Log;
+
+import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.entity.unit.Zombie;
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
 import com.aehooo.tdsqn.resources.TextureName;
@@ -18,7 +21,6 @@ public class LevelScene extends Scene {
 
 	public LevelScene(final TextureName bgname) {
 		super();
-
 		this.setTouchAreaBindingOnActionDownEnabled(true);
 		this.setTouchAreaBindingOnActionMoveEnabled(true);
 
@@ -47,11 +49,27 @@ public class LevelScene extends Scene {
 		 * ImageAlligator3000.getVertexBufferObjectManager()); zz.animate(100);
 		 */
 
-		Zombie zz = new Zombie(new Vector2D(500, 500));
+		Zombie zz;
+		try {
+			zz = new Zombie(new Vector2D(500, 500));
+		} catch (Exception e) {
+			Log.e("LevelScene", "Zombie com erro", e);
+			return;
+		}
 		zz.animateLinha(0);
 
 		this.bg.attachChild(zz.getSprite());
 		this.registerTouchArea(zz.getSprite());
+
+		Group g;
+		try {
+			g = new Group(500, 400);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+
+		this.bg.attachChild(g.getSprite());
 
 		// this.bg.attachChild(zz);
 

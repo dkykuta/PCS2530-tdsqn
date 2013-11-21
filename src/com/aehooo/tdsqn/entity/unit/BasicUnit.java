@@ -1,15 +1,8 @@
 package com.aehooo.tdsqn.entity.unit;
 
-import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.texture.region.ITiledTextureRegion;
-
 import com.aehooo.tdsqn.entity.GameEntity;
 import com.aehooo.tdsqn.entity.ICasterEntity;
 import com.aehooo.tdsqn.entity.ILiveEntity;
-import com.aehooo.tdsqn.entity.ITouchHandler;
-import com.aehooo.tdsqn.entity.ThisGameAnimatedSprite;
-import com.aehooo.tdsqn.resources.ImageAlligator3000;
-import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.utils.Constants;
 import com.aehooo.tdsqn.utils.Vector2D;
 
@@ -23,33 +16,14 @@ public abstract class BasicUnit extends GameEntity implements ILiveEntity,
 	private int range;
 	private double cd;
 
-	public BasicUnit(final Vector2D pos) {
+	public BasicUnit(final Vector2D pos) throws Exception {
 		super(pos);
-
-		this.setSprite(new ThisGameAnimatedSprite(pos.getX(), pos.getY(), this
-				.getMyTextureRegion()));
-
-		this.setTouchHandler(new ITouchHandler() {
-
-			@Override
-			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
-					final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
-				return BasicUnit.this.onAreaTouched(pSceneTouchEvent,
-						pTouchAreaLocalX, pTouchAreaLocalY);
-			}
-		});
 
 		this.initializeConstants();
 	}
 
-	public BasicUnit(final float pX, final float pY) {
+	public BasicUnit(final float pX, final float pY) throws Exception {
 		this(new Vector2D(pX, pY));
-	}
-
-	private ITiledTextureRegion getMyTextureRegion() {
-		ITiledTextureRegion textureRegion = ImageAlligator3000
-				.getTiledTexture(TextureName.ZOMBIE);
-		return textureRegion;
 	}
 
 	private void initializeConstants() {
@@ -146,11 +120,6 @@ public abstract class BasicUnit extends GameEntity implements ILiveEntity,
 		for (int i = 0; i < colunas; i++) {
 			frames[i] = (linha * colunas) + i;
 		}
-		this.getSprite().animate(duracoes, frames);
-	}
-
-	public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
-			final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
-		return false;
+		this.animate(duracoes, frames);
 	}
 }

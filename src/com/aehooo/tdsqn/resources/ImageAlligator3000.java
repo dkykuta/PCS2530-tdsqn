@@ -61,6 +61,14 @@ public class ImageAlligator3000 {
 							"gfx/staticSprites/zombie.png", 1500, 0, 3, 4);
 			mapaTiledTextures.put(TextureName.ZOMBIE, zombie);
 		}
+		newAtlas(1024, 1024);
+		{
+			// barra_lateral 100 x 480
+			TextureRegion group = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(atlas, bga, "gfx/staticSprites/group.png",
+							0, 0);
+			mapaTexturas.put(TextureName.GROUP, group);
+		}
 
 		// house1 350 x 350
 		// TextureRegion house1 =

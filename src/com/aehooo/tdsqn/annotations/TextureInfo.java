@@ -7,5 +7,5 @@ import com.aehooo.tdsqn.resources.TextureName;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TextureInfo {
-	public TextureName value();
+	public TextureName name();
 }
