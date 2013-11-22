@@ -36,8 +36,6 @@ public class MainActivity extends SimpleBaseGameActivity {
 	protected Scene onCreateScene() {
 		LevelScene scene = new LevelScene(TextureName.MAPA1_BG);
 
-		// Scene scene = new AEHOScene();
-
 		return scene;
 	}
 
