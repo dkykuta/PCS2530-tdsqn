@@ -1,5 +1,6 @@
 package com.aehooo.tdsqn.entity;
 
+import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.TextureRegion;
@@ -14,20 +15,23 @@ public class GameEntity {
 
 	private IThisGameSprite sprite;
 	private Vector2D pos;
+	protected int colunas;
 
 	private boolean animated;
 
-	public GameEntity(final float pX, final float pY) throws Exception {
-		this(new Vector2D(pX, pY));
+	public GameEntity(final Scene fScene, final float pX, final float pY)
+			throws Exception {
+		this(fScene, new Vector2D(pX, pY));
 	}
 
-	public GameEntity(final Vector2D pos) throws Exception {
+	public GameEntity(final Scene fScene, final Vector2D pos) throws Exception {
 		this.setPos(pos);
 
-		this.initializeSprite(pos);
+		this.initializeSprite(fScene, pos);
 	}
 
-	private void initializeSprite(final Vector2D pos) throws Exception {
+	private void initializeSprite(final Scene fScene, final Vector2D pos)
+			throws Exception {
 		TextureInfo annotation = this.getClass().getAnnotation(
 				TextureInfo.class);
 		if (annotation == null) {
@@ -40,10 +44,15 @@ public class GameEntity {
 
 			TextureRegion texture = ImageAlligator3000.getTexture(textureName);
 
+			annotation.linhas();
+
 			if (tiledTexture != null) {
+				this.colunas = tiledTexture.getTileCount()
+						/ annotation.linhas().length;
 				this.setSprite(new ThisGameAnimatedSprite(pos.getX(), pos
 						.getY(), tiledTexture));
 				this.animated = true;
+				this.animateLinha(0);
 			} else if (texture != null) {
 				this.setSprite(new ThisGameSprite(pos.getX(), pos.getY(),
 						texture));
@@ -62,6 +71,7 @@ public class GameEntity {
 							pTouchAreaLocalX, pTouchAreaLocalY);
 				}
 			});
+			fScene.registerTouchArea(this.getSprite());
 		}
 	}
 
@@ -105,6 +115,18 @@ public class GameEntity {
 			AnimatedSprite aSprite = (AnimatedSprite) this.sprite;
 			aSprite.animate(pFrameDurations, pFrames);
 		}
+	}
+
+	public void animateLinha(final int linha) {
+		long[] duracoes = new long[this.colunas];
+		for (int i = 0; i < this.colunas; i++) {
+			duracoes[i] = 100;
+		}
+		int[] frames = new int[this.colunas];
+		for (int i = 0; i < this.colunas; i++) {
+			frames[i] = (linha * this.colunas) + i;
+		}
+		this.animate(duracoes, frames);
 	}
 
 }

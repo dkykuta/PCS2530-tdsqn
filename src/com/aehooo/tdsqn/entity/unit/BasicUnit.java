@@ -1,5 +1,7 @@
 package com.aehooo.tdsqn.entity.unit;
 
+import org.andengine.entity.scene.Scene;
+
 import com.aehooo.tdsqn.entity.GameEntity;
 import com.aehooo.tdsqn.entity.ICasterEntity;
 import com.aehooo.tdsqn.entity.ILiveEntity;
@@ -16,14 +18,17 @@ public abstract class BasicUnit extends GameEntity implements ILiveEntity,
 	private int range;
 	private double cd;
 
-	public BasicUnit(final Vector2D pos) throws Exception {
-		super(pos);
+	public static final String NORMAL = "";
+
+	public BasicUnit(final Scene fScene, final Vector2D pos) throws Exception {
+		super(fScene, pos);
 
 		this.initializeConstants();
 	}
 
-	public BasicUnit(final float pX, final float pY) throws Exception {
-		this(new Vector2D(pX, pY));
+	public BasicUnit(final Scene fScene, final float pX, final float pY)
+			throws Exception {
+		this(fScene, new Vector2D(pX, pY));
 	}
 
 	private void initializeConstants() {
@@ -110,16 +115,4 @@ public abstract class BasicUnit extends GameEntity implements ILiveEntity,
 	 * Meu
 	 */
 
-	public void animateLinha(final int linha) {
-		int colunas = 3;
-		long[] duracoes = new long[colunas];
-		for (int i = 0; i < colunas; i++) {
-			duracoes[i] = 100;
-		}
-		int[] frames = new int[colunas];
-		for (int i = 0; i < colunas; i++) {
-			frames[i] = (linha * colunas) + i;
-		}
-		this.animate(duracoes, frames);
-	}
 }

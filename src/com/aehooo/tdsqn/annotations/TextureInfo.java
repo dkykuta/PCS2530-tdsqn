@@ -8,4 +8,6 @@ import com.aehooo.tdsqn.resources.TextureName;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TextureInfo {
 	public TextureName name();
+
+	public String[] linhas();
 }

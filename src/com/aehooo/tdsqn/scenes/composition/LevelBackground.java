@@ -1,17 +1,16 @@
 package com.aehooo.tdsqn.scenes.composition;
 
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import android.util.Log;
 
-public class LevelBackground extends Sprite {
+import com.aehooo.tdsqn.entity.ThisGameSprite;
+
+public class LevelBackground extends ThisGameSprite {
 	public LevelBackground(final float pX, final float pY,
-			final ITextureRegion pTextureRegion,
-			final VertexBufferObjectManager pVertexBufferObjectManager) {
-		super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
+			final ITextureRegion pTextureRegion) {
+		super(pX, pY, pTextureRegion);
 	}
 
 	private float antx = 0;
