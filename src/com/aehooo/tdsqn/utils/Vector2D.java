@@ -28,12 +28,22 @@ public class Vector2D {
 	public void setY(final int y) {
 		this.y = y;
 	}
-
+	
+	public double distTo(final Vector2D other) {
+		double dx = this.x - other.x;
+		double dy = this.y - other.y;
+		return Math.sqrt(dx * dx - dy * dy);
+	}
+	
 	public Vector2D add(final Vector2D other) {
+		if (other == null)
+			return this;
 		return new Vector2D(this.x + other.x, this.y + other.y);
 	}
 
 	public Vector2D sub(final Vector2D other) {
+		if (other == null)
+			return this;
 		return new Vector2D(this.x - other.x, this.y - other.y);
 	}
 
@@ -43,5 +53,10 @@ public class Vector2D {
 
 	public Vector2D div(final double scalar) {
 		return new Vector2D(this.x / scalar, this.y / scalar);
+	}
+	
+	public Vector2D normalize() {
+		double norma = Math.sqrt(this.x * this.x + this.y * this.y);
+		return this.div(norma);
 	}
 }

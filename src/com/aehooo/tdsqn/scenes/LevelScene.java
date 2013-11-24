@@ -10,6 +10,8 @@ import android.util.Log;
 
 import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.entity.unit.Zombie;
+import com.aehooo.tdsqn.manager.UpdateManager;
+import com.aehooo.tdsqn.path.Path;
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.scenes.composition.LevelBackground;
@@ -19,13 +21,29 @@ public class LevelScene extends Scene {
 
 	private Sprite bg;
 	private Sprite barraLateral;
+	private Path path;
+	private UpdateManager updateManager;
 
 	public LevelScene(final TextureName bgname) {
 		super();
 
 		this.initializeBasicScreen(bgname);
-
+		
+		this.path = new Path();
+		
+		path.addPonto(0, 60);
+		path.addPonto(500, 60);
+		path.addPonto(500, 800);
+		path.addPonto(1000, 800);
+		path.addPonto(1000, 600);
+		path.addPonto(800, 600);
+		path.addPonto(800, 400);
+		path.addPonto(1340, 400);
+	
+		updateManager = new UpdateManager();
 		this.createTestUnits();
+	
+		this.registerUpdateHandler(updateManager);
 
 		//
 		// SETTING TOUCH
@@ -46,17 +64,19 @@ public class LevelScene extends Scene {
 			return;
 		}
 
-		this.bg.attachChild(zz.getSprite());
-
 		Group g;
 		try {
-			g = new Group(this, 500, 400);
+			g = new Group(this, path);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
+		updateManager.addUpdatable(g);
+		
+		g.addUnit(zz);
 
 		this.bg.attachChild(g.getSprite());
+		g.getSprite().attachChild(zz.getSprite());
 	}
 
 	private void initializeBasicScreen(final TextureName bgname) {

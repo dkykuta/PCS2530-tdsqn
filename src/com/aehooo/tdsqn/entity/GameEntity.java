@@ -16,6 +16,7 @@ public class GameEntity {
 	private IThisGameSprite sprite;
 	private Vector2D pos;
 	protected int colunas;
+	private int lastAnimatedLine;
 
 	private boolean animated;
 
@@ -26,7 +27,7 @@ public class GameEntity {
 
 	public GameEntity(final Scene fScene, final Vector2D pos) throws Exception {
 		this.setPos(pos);
-
+		lastAnimatedLine = -1;
 		this.initializeSprite(fScene, pos);
 	}
 
@@ -89,6 +90,10 @@ public class GameEntity {
 	public void setPos(final float x, final float y) {
 		this.setPos(new Vector2D(x, y));
 	}
+	
+	public void changePos(final Vector2D change) {
+		this.setPos(this.getPos().add(change));
+	}
 
 	public IThisGameSprite getSprite() {
 		return this.sprite;
@@ -117,15 +122,19 @@ public class GameEntity {
 		}
 	}
 
-	public void animateLinha(final int linha) {
+	public void animateLinha(final int line) {
+		if (line == lastAnimatedLine) {
+			return;
+		}
 		long[] duracoes = new long[this.colunas];
 		for (int i = 0; i < this.colunas; i++) {
 			duracoes[i] = 100;
 		}
 		int[] frames = new int[this.colunas];
 		for (int i = 0; i < this.colunas; i++) {
-			frames[i] = (linha * this.colunas) + i;
+			frames[i] = (line * this.colunas) + i;
 		}
+		lastAnimatedLine = line;
 		this.animate(duracoes, frames);
 	}
 

@@ -15,21 +15,9 @@ public class Zombie extends BasicUnit {
 		super(fScene, pos);
 	}
 
-	int lastLinha = 0;
-
 	@Override
-	public void animateLinha(final int linha) {
-		super.animateLinha(linha);
-		this.lastLinha = linha;
-	}
-
-	@Override
-	public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
-			final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
-		if (pSceneTouchEvent.isActionDown()) {
-			this.animateLinha((this.lastLinha + 1) % 4);
-		}
-		return true;
+	public String getName() {
+		return "Zombie";
 	}
 
 }

@@ -114,5 +114,29 @@ public abstract class BasicUnit extends GameEntity implements ILiveEntity,
 	/*
 	 * Meu
 	 */
-
+	public abstract String getName();
+	
+	public void selectRotation(Vector2D diff) {
+		if (diff.getY() == 0) {
+			// movimento na horizontal
+			if (diff.getX() > 0) {
+				// movimento para a direita
+				this.animateLinha(1);
+			} else if (diff.getX() < 0) {
+				// movimento para a esquerda
+				this.animateLinha(3);
+			}
+		}
+		else if (diff.getX() == 0) {
+			//movimento na vertical
+			if (diff.getY() > 0) {
+				// movimento para baixo
+				this.animateLinha(0);
+			}
+			else if (diff.getY() < 0) {
+				// movimento para cima
+				this.animateLinha(2);
+			}
+		}
+	}
 }
