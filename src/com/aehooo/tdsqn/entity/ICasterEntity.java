@@ -8,10 +8,4 @@ public interface ICasterEntity {
 	public boolean spendMP(int amount);
 
 	public boolean receiveMP(int amount);
-
-	public double getAPS();
-
-	public void cooldown();
-
-	public int getRange();
 }

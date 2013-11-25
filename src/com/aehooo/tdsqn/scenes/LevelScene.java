@@ -9,6 +9,7 @@ import org.andengine.input.touch.TouchEvent;
 import android.util.Log;
 
 import com.aehooo.tdsqn.entity.group.Group;
+import com.aehooo.tdsqn.entity.tower.OneTower;
 import com.aehooo.tdsqn.entity.unit.Zombie;
 import com.aehooo.tdsqn.manager.UpdateManager;
 import com.aehooo.tdsqn.path.Path;
@@ -28,22 +29,22 @@ public class LevelScene extends Scene {
 		super();
 
 		this.initializeBasicScreen(bgname);
-		
+
 		this.path = new Path();
-		
-		path.addPonto(0, 60);
-		path.addPonto(500, 60);
-		path.addPonto(500, 800);
-		path.addPonto(1000, 800);
-		path.addPonto(1000, 600);
-		path.addPonto(800, 600);
-		path.addPonto(800, 400);
-		path.addPonto(1340, 400);
-	
-		updateManager = new UpdateManager();
+
+		this.path.addPonto(0, 60);
+		this.path.addPonto(500, 60);
+		this.path.addPonto(500, 800);
+		this.path.addPonto(1000, 800);
+		this.path.addPonto(1000, 600);
+		this.path.addPonto(800, 600);
+		this.path.addPonto(800, 400);
+		this.path.addPonto(1340, 400);
+
+		this.updateManager = new UpdateManager();
 		this.createTestUnits();
-	
-		this.registerUpdateHandler(updateManager);
+
+		this.registerUpdateHandler(this.updateManager);
 
 		//
 		// SETTING TOUCH
@@ -66,17 +67,27 @@ public class LevelScene extends Scene {
 
 		Group g;
 		try {
-			g = new Group(this, path);
+			g = new Group(this, this.path);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
-		updateManager.addUpdatable(g);
-		
+		this.updateManager.addUpdatable(g);
+
 		g.addUnit(zz);
 
 		this.bg.attachChild(g.getSprite());
 		g.getSprite().attachChild(zz.getSprite());
+
+		OneTower t;
+		try {
+			t = new OneTower(this, 200, 200);
+		} catch (Exception e) {
+			Log.i("LevelScene", "OneTower exception", e);
+			return;
+		}
+		
+		this.bg.attachChild(t.getSprite());
 	}
 
 	private void initializeBasicScreen(final TextureName bgname) {

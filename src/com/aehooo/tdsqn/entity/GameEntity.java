@@ -27,7 +27,7 @@ public class GameEntity {
 
 	public GameEntity(final Scene fScene, final Vector2D pos) throws Exception {
 		this.setPos(pos);
-		lastAnimatedLine = -1;
+		this.lastAnimatedLine = -1;
 		this.initializeSprite(fScene, pos);
 	}
 
@@ -44,8 +44,6 @@ public class GameEntity {
 					.getTiledTexture(textureName);
 
 			TextureRegion texture = ImageAlligator3000.getTexture(textureName);
-
-			annotation.linhas();
 
 			if (tiledTexture != null) {
 				this.colunas = tiledTexture.getTileCount()
@@ -90,9 +88,14 @@ public class GameEntity {
 	public void setPos(final float x, final float y) {
 		this.setPos(new Vector2D(x, y));
 	}
-	
+
 	public void changePos(final Vector2D change) {
 		this.setPos(this.getPos().add(change));
+	}
+
+	public Vector2D getCenter() {
+		return this.pos.add(new Vector2D(this.getSprite().getWidthScaled() / 2,
+				this.getSprite().getHeightScaled() / 2));
 	}
 
 	public IThisGameSprite getSprite() {
@@ -123,7 +126,7 @@ public class GameEntity {
 	}
 
 	public void animateLinha(final int line) {
-		if (line == lastAnimatedLine) {
+		if (line == this.lastAnimatedLine) {
 			return;
 		}
 		long[] duracoes = new long[this.colunas];
@@ -134,7 +137,7 @@ public class GameEntity {
 		for (int i = 0; i < this.colunas; i++) {
 			frames[i] = (line * this.colunas) + i;
 		}
-		lastAnimatedLine = line;
+		this.lastAnimatedLine = line;
 		this.animate(duracoes, frames);
 	}
 
