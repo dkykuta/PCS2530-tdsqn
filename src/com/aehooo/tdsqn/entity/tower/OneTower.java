@@ -2,10 +2,15 @@ package com.aehooo.tdsqn.entity.tower;
 
 import org.andengine.entity.scene.Scene;
 
+import com.aehooo.tdsqn.annotations.APS;
+import com.aehooo.tdsqn.annotations.BuildAction;
 import com.aehooo.tdsqn.annotations.TextureInfo;
+import com.aehooo.tdsqn.entity.impl.Action;
+import com.aehooo.tdsqn.enums.GameTargetType;
 import com.aehooo.tdsqn.resources.TextureName;
 
-@TextureInfo(linhas = { "" }, name = TextureName.ZOMBIE)
+@TextureInfo(linhas = { "" }, name = TextureName.TORRE1)
+@APS(2)
 public class OneTower extends BasicTower {
 
 	public OneTower(final Scene fScene, final float pX, final float pY)
@@ -16,6 +21,11 @@ public class OneTower extends BasicTower {
 	@Override
 	public String getName() {
 		return "OneTower";
+	}
+
+	@BuildAction(targetType = GameTargetType.GROUP)
+	public void buildAction(final Action action) {
+
 	}
 
 }

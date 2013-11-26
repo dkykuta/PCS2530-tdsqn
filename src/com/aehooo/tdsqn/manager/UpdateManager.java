@@ -5,29 +5,28 @@ import java.util.List;
 
 import org.andengine.engine.handler.IUpdateHandler;
 
-import android.util.Log;
-
 import com.aehooo.tdsqn.entity.IUpdatable;
 
 public class UpdateManager implements IUpdateHandler {
 
 	private float t;
 	private List<IUpdatable> listUpdatable;
-	
+
 	private static final double frameTime = 1.0 / 60;
-	
-	
+
 	public UpdateManager() {
-		t = 0;
-		listUpdatable = new ArrayList<IUpdatable>();
+		this.t = 0;
+		this.listUpdatable = new ArrayList<IUpdatable>();
 	}
-	
+
 	@Override
-	public void onUpdate(float pSecondsElapsed) {
+	public void onUpdate(final float pSecondsElapsed) {
 		this.t += pSecondsElapsed;
-		while (this.t >= frameTime) {
-			this.t -= frameTime;
-			for (IUpdatable e : listUpdatable) {
+		while (this.t >= UpdateManager.frameTime) {
+			this.t -= UpdateManager.frameTime;
+			List<IUpdatable> cpList = new ArrayList<IUpdatable>(
+					this.listUpdatable);
+			for (IUpdatable e : cpList) {
 				e.onFrameUpdate();
 			}
 		}
@@ -35,10 +34,14 @@ public class UpdateManager implements IUpdateHandler {
 
 	@Override
 	public void reset() {
-		
+
 	}
-	
-	public void addUpdatable(IUpdatable updatable) {
-		listUpdatable.add(updatable);
+
+	public void addUpdatable(final IUpdatable updatable) {
+		this.listUpdatable.add(updatable);
+	}
+
+	public void removeUpdatable(final IUpdatable updatable) {
+		this.listUpdatable.remove(updatable);
 	}
 }

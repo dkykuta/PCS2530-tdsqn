@@ -5,7 +5,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 
 import android.util.Log;
 
-import com.aehooo.tdsqn.entity.ThisGameSprite;
+import com.aehooo.tdsqn.entity.impl.ThisGameSprite;
 
 public class LevelBackground extends ThisGameSprite {
 	public LevelBackground(final float pX, final float pY,

@@ -2,9 +2,9 @@ package com.aehooo.tdsqn.entity.unit;
 
 import org.andengine.entity.scene.Scene;
 
-import com.aehooo.tdsqn.entity.ActionEntity;
 import com.aehooo.tdsqn.entity.ICasterEntity;
 import com.aehooo.tdsqn.entity.ILiveEntity;
+import com.aehooo.tdsqn.entity.impl.ActionEntity;
 import com.aehooo.tdsqn.utils.Vector2D;
 
 public abstract class BasicUnit extends ActionEntity implements ILiveEntity,

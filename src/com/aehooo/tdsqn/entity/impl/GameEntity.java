@@ -1,4 +1,4 @@
-package com.aehooo.tdsqn.entity;
+package com.aehooo.tdsqn.entity.impl;
 
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.AnimatedSprite;
@@ -7,16 +7,22 @@ import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 import com.aehooo.tdsqn.annotations.TextureInfo;
+import com.aehooo.tdsqn.entity.IThisGameSprite;
+import com.aehooo.tdsqn.entity.ITouchHandler;
+import com.aehooo.tdsqn.entity.IUpdatable;
+import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
 import com.aehooo.tdsqn.resources.TextureName;
+import com.aehooo.tdsqn.scenes.LevelScene;
 import com.aehooo.tdsqn.utils.Vector2D;
 
-public class GameEntity {
+public abstract class GameEntity implements IUpdatable {
 
 	private IThisGameSprite sprite;
 	private Vector2D pos;
 	protected int colunas;
 	private int lastAnimatedLine;
+	private boolean dead;
 
 	private boolean animated;
 
@@ -29,6 +35,7 @@ public class GameEntity {
 		this.setPos(pos);
 		this.lastAnimatedLine = -1;
 		this.initializeSprite(fScene, pos);
+		this.dead = false;
 	}
 
 	private void initializeSprite(final Scene fScene, final Vector2D pos)
@@ -48,12 +55,13 @@ public class GameEntity {
 			if (tiledTexture != null) {
 				this.colunas = tiledTexture.getTileCount()
 						/ annotation.linhas().length;
-				this.setSprite(new ThisGameAnimatedSprite(pos.getX(), pos
-						.getY(), tiledTexture));
+				this.setSprite(new ThisGameAnimatedSprite(pos.getXasInt(), pos
+						.getYasInt(), tiledTexture));
 				this.animated = true;
 				this.animateLinha(0);
 			} else if (texture != null) {
-				this.setSprite(new ThisGameSprite(pos.getX(), pos.getY(),
+				this.setSprite(new ThisGameSprite(pos.getXasInt(), pos
+						.getYasInt(),
 						texture));
 				this.animated = false;
 			} else {
@@ -74,6 +82,18 @@ public class GameEntity {
 		}
 	}
 
+	public void shouldDie() {
+		LevelScene scene = LevelManager.getCurrentLevelScene();
+		this.getSprite().detachChildren();
+		this.getSprite().detachSelf();
+		scene.unregisterTouchArea(this.getSprite());
+		this.dead = true;
+	}
+
+	public boolean isDead() {
+		return this.dead;
+	}
+
 	public Vector2D getPos() {
 		return this.pos;
 	}
@@ -81,7 +101,7 @@ public class GameEntity {
 	public void setPos(final Vector2D v) {
 		this.pos = v;
 		if (this.sprite != null) {
-			this.sprite.setPosition(v.getX(), v.getY());
+			this.sprite.setPosition(v.getXasInt(), v.getYasInt());
 		}
 	}
 
@@ -104,7 +124,7 @@ public class GameEntity {
 
 	public void setSprite(final IThisGameSprite sprite) {
 		this.sprite = sprite;
-		this.sprite.setPosition(this.pos.getX(), this.pos.getY());
+		this.sprite.setPosition(this.pos.getXasInt(), this.pos.getYasInt());
 	}
 
 	public void setTouchHandler(final ITouchHandler touchHandler) {

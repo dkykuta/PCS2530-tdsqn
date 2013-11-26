@@ -1,16 +1,14 @@
 package com.aehooo.tdsqn.entity.group;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
 import com.aehooo.tdsqn.annotations.TextureInfo;
-import com.aehooo.tdsqn.entity.GameEntity;
 import com.aehooo.tdsqn.entity.IUpdatable;
+import com.aehooo.tdsqn.entity.impl.GameEntity;
 import com.aehooo.tdsqn.entity.unit.BasicUnit;
 import com.aehooo.tdsqn.path.Path;
 import com.aehooo.tdsqn.resources.TextureName;
@@ -26,17 +24,17 @@ public class Group extends GameEntity implements IUpdatable {
 	private boolean initialized;
 	private int nextPointIdx;
 
-	private Map<String, List<BasicUnit>> agrupamentos;
+	private List<BasicUnit> unidades;
 
 	public Group(final Scene fScene, final Path path) throws Exception {
 		super(fScene, path.getPoint(0));
 		this.direction = path.getDir(0, 1);
 		this.nextPointIdx = 1;
-		this.vel = 1.0;
+		this.vel = 2.0;
 		this.path = path;
 		this.walking = false;
 		this.initialized = false;
-		this.agrupamentos = new HashMap<String, List<BasicUnit>>();
+		this.unidades = new ArrayList<BasicUnit>();
 	}
 
 	@Override
@@ -64,11 +62,9 @@ public class Group extends GameEntity implements IUpdatable {
 	public void setPos(final Vector2D v) {
 		Vector2D diff = v.sub(this.getPos());
 		super.setPos(v);
-		if (this.agrupamentos != null) {
-			for (List<BasicUnit> list : this.agrupamentos.values()) {
-				for (BasicUnit u : list) {
-					u.selectRotation(diff);
-				}
+		if (this.unidades != null) {
+			for (BasicUnit u : this.unidades) {
+				u.selectRotation(diff);
 			}
 		}
 	}
@@ -90,6 +86,7 @@ public class Group extends GameEntity implements IUpdatable {
 			this.nextPointIdx++;
 			if (this.nextPointIdx >= this.path.size()) {
 				this.direction = null;
+				this.shouldDie();
 				return;
 			}
 			this.direction = this.path.getDir(this.nextPointIdx - 1,
@@ -102,6 +99,12 @@ public class Group extends GameEntity implements IUpdatable {
 		}
 	}
 
+	public void attachChild(final GameEntity e) {
+		if (e != null) {
+			this.getSprite().attachChild(e.getSprite());
+		}
+	}
+
 	public void addUnit(final BasicUnit u) {
 		if (this.initialized) {
 			return;
@@ -109,13 +112,12 @@ public class Group extends GameEntity implements IUpdatable {
 
 		u.setPos(new Vector2D(0, 0));
 
-		List<BasicUnit> list = this.agrupamentos.get(u.getName());
-		if (list == null) {
-			list = new ArrayList<BasicUnit>();
-			this.agrupamentos.put(u.getName(), list);
-		}
-		list.add(u);
+		this.unidades.add(u);
 
+	}
+
+	public List<BasicUnit> getUnits() {
+		return this.unidades;
 	}
 
 	@Override

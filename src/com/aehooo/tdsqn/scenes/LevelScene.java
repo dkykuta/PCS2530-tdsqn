@@ -1,5 +1,7 @@
 package com.aehooo.tdsqn.scenes;
 
+import java.util.List;
+
 import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.scene.Scene;
@@ -9,8 +11,12 @@ import org.andengine.input.touch.TouchEvent;
 import android.util.Log;
 
 import com.aehooo.tdsqn.entity.group.Group;
+import com.aehooo.tdsqn.entity.impl.Action;
+import com.aehooo.tdsqn.entity.impl.ListOfEntity;
+import com.aehooo.tdsqn.entity.tower.BasicTower;
 import com.aehooo.tdsqn.entity.tower.OneTower;
 import com.aehooo.tdsqn.entity.unit.Zombie;
+import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.manager.UpdateManager;
 import com.aehooo.tdsqn.path.Path;
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
@@ -24,9 +30,17 @@ public class LevelScene extends Scene {
 	private Sprite barraLateral;
 	private Path path;
 	private UpdateManager updateManager;
+	private ListOfEntity<Action> actions;
+	private ListOfEntity<Group> groups;
+	private ListOfEntity<BasicTower> towers;
 
 	public LevelScene(final TextureName bgname) {
 		super();
+		LevelManager.changeLevelScene(this);
+
+		this.updateManager = new UpdateManager();
+
+		LevelManager.setUpdateManager(this.updateManager);
 
 		this.initializeBasicScreen(bgname);
 
@@ -41,7 +55,12 @@ public class LevelScene extends Scene {
 		this.path.addPonto(800, 400);
 		this.path.addPonto(1340, 400);
 
-		this.updateManager = new UpdateManager();
+		this.actions = new ListOfEntity<Action>();
+
+		this.groups = new ListOfEntity<Group>();
+
+		this.towers = new ListOfEntity<BasicTower>();
+
 		this.createTestUnits();
 
 		this.registerUpdateHandler(this.updateManager);
@@ -54,6 +73,34 @@ public class LevelScene extends Scene {
 		this.setTouchAreaBindingOnActionMoveEnabled(true);
 		this.registerTouchArea(this.barraLateral);
 		this.registerTouchArea(this.bg);
+	}
+
+	public List<Group> getGroups() {
+		return this.groups.getList();
+	}
+
+	public void addGroup(final Group g) {
+		this.groups.addEntity(g);
+	}
+
+	public List<Action> getActions() {
+		return this.actions.getList();
+	}
+
+	public void addAction(final Action action) {
+		this.actions.addEntity(action);
+	}
+
+	public Sprite getGameWindow() {
+		return this.bg;
+	}
+
+	public Sprite getSidebar() {
+		return this.barraLateral;
+	}
+
+	public UpdateManager getUpdateManager() {
+		return this.updateManager;
 	}
 
 	private void createTestUnits() {
@@ -72,12 +119,11 @@ public class LevelScene extends Scene {
 			e.printStackTrace();
 			return;
 		}
-		this.updateManager.addUpdatable(g);
+		this.groups.addEntity(g);
 
 		g.addUnit(zz);
 
-		this.bg.attachChild(g.getSprite());
-		g.getSprite().attachChild(zz.getSprite());
+		g.attachChild(zz);
 
 		OneTower t;
 		try {
@@ -86,8 +132,8 @@ public class LevelScene extends Scene {
 			Log.i("LevelScene", "OneTower exception", e);
 			return;
 		}
-		
-		this.bg.attachChild(t.getSprite());
+		this.towers.addEntity(t);
+		// this.bg.attachChild(t.getSprite());
 	}
 
 	private void initializeBasicScreen(final TextureName bgname) {

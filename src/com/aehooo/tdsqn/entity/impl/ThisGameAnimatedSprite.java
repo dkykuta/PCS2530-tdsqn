@@ -1,9 +1,11 @@
-package com.aehooo.tdsqn.entity;
+package com.aehooo.tdsqn.entity.impl;
 
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
+import com.aehooo.tdsqn.entity.IThisGameSprite;
+import com.aehooo.tdsqn.entity.ITouchHandler;
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
 
 public class ThisGameAnimatedSprite extends AnimatedSprite implements

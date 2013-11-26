@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.andengine.entity.scene.Scene;
 
-import com.aehooo.tdsqn.entity.GameEntity;
+import com.aehooo.tdsqn.entity.impl.GameEntity;
 
 public class GameScene extends Scene {
 	private List<GameEntity> entities;
