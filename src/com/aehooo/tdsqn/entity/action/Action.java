@@ -24,7 +24,7 @@ public class Action extends GameEntity implements IUpdatable {
 
 	public Action(final Scene fScene, final ILiveEntity origin,
 			final ITargetEntity target) throws Exception {
-		super(fScene, origin.getCenter());
+		super(fScene, origin.getCenterInGameWindow());
 		this.origin = origin;
 		this.target = target;
 		this.vel = 5;
@@ -35,11 +35,11 @@ public class Action extends GameEntity implements IUpdatable {
 	}
 
 	public void walk(final double dRemain) {
-		Vector2D direction = this.target.getCenter().sub(this.getPos())
-				.normalize();
+		Vector2D targetCenter = this.target.getCenterInGameWindow();
+		Vector2D direction = targetCenter.sub(this.getPos()).normalize();
 		Vector2D newpos = this.getPos().add(direction.mul(dRemain));
 
-		if (this.target.getCenter().isBetween(this.getPos(), newpos)) {
+		if (targetCenter.isBetween(this.getPos(), newpos)) {
 			this.execute();
 			this.shouldDie();
 		} else {
@@ -49,7 +49,16 @@ public class Action extends GameEntity implements IUpdatable {
 
 	@Override
 	public void onFrameUpdate() {
+		if (this.target.isDead()) {
+			this.shouldDie();
+			return;
+		}
 		this.walk(this.vel);
+	}
+
+	@Override
+	public void onCheckDead() {
+		// TODO Auto-generated method stub
 	}
 
 	public void assembly() {

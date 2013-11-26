@@ -29,6 +29,9 @@ public class UpdateManager implements IUpdateHandler {
 			for (IUpdatable e : cpList) {
 				e.onFrameUpdate();
 			}
+			for (IUpdatable e : cpList) {
+				e.onCheckDead();
+			}
 		}
 	}
 

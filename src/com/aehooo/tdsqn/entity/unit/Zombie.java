@@ -8,7 +8,7 @@ import com.aehooo.tdsqn.resources.TextureName;
 @TextureInfo(name = TextureName.ZOMBIE, linhas = { "normal-baixo",
 		"normal-direita", "normal-cima", "normal-esquerda" })
 @APS(2)
-@Vel(0.3)
+@Vel(1.3)
 public class Zombie extends BasicUnit {
 
 	public Zombie() throws Exception {

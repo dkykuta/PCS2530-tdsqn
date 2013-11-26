@@ -8,8 +8,6 @@ import java.util.Map;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
-import android.util.Log;
-
 import com.aehooo.tdsqn.annotations.TextureInfo;
 import com.aehooo.tdsqn.entity.ILiveEntity;
 import com.aehooo.tdsqn.entity.ITargetEntity;
@@ -137,10 +135,7 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 		AttrModifier attrModifier = this.modificadores.get("vel");
 		if (attrModifier != null) {
-			Log.i("Group", "slow: " + attrModifier.getPctgTotal());
 			vel *= attrModifier.getPctgTotal();
-		} else {
-			Log.i("Group", "sem slow");
 		}
 
 		return vel;
@@ -148,18 +143,27 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 	@Override
 	public void onFrameUpdate() {
-		List<BasicUnit> mortos = new ArrayList<BasicUnit>();
 		if (this.walking) {
 			this.walk(this.calculateVel());
 		}
+		for (BasicUnit u : this.unidades) {
+			u.onFrameUpdate();
+		}
+	}
+
+	@Override
+	public void onCheckDead() {
+		List<BasicUnit> mortos = new ArrayList<BasicUnit>();
 		for (BasicUnit u : this.unidades) {
 			u.onFrameUpdate();
 			if (u.isDead()) {
 				mortos.add(u);
 			}
 		}
-
 		this.unidades.removeAll(mortos);
+		if ((this.unidades.size() <= 0) && this.initialized) {
+			this.shouldDie();
+		}
 	}
 
 	@Override

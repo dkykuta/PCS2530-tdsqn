@@ -54,6 +54,21 @@ public class AttrModifier implements IUpdatable {
 
 	}
 
+	@Override
+	public void onCheckDead() {
+		List<ILiveEntity> toRemove = new ArrayList<ILiveEntity>();
+		for (Entry<ILiveEntity, AttrModifierPart> entry : this.modifiers
+				.entrySet()) {
+			AttrModifierPart part = entry.getValue();
+			if (part.dead) {
+				toRemove.add(entry.getKey());
+			}
+		}
+		for (ILiveEntity e : toRemove) {
+			this.modifiers.remove(e);
+		}
+	}
+
 	private class AttrModifierPart implements IUpdatable {
 		private int frames;
 		private double pctg;
@@ -78,6 +93,10 @@ public class AttrModifier implements IUpdatable {
 			if (this.frames <= 0) {
 				this.dead = true;
 			}
+		}
+
+		@Override
+		public void onCheckDead() {
 		}
 	}
 }

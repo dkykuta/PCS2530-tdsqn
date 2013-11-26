@@ -6,8 +6,7 @@ import java.util.List;
 import com.aehooo.tdsqn.entity.IUpdatable;
 import com.aehooo.tdsqn.manager.LevelManager;
 
-public class ListOfEntity<E extends GameEntity> implements
-		IUpdatable {
+public class ListOfEntity<E extends GameEntity> implements IUpdatable {
 	private List<E> list;
 
 	public ListOfEntity() {
@@ -34,6 +33,20 @@ public class ListOfEntity<E extends GameEntity> implements
 		List<E> toRemove = new ArrayList<E>();
 		for (E e : this.list) {
 			e.onFrameUpdate();
+			if (e.isDead()) {
+				toRemove.add(e);
+			}
+		}
+		for (E e : toRemove) {
+			this.removeEntity(e);
+		}
+	}
+
+	@Override
+	public void onCheckDead() {
+		List<E> toRemove = new ArrayList<E>();
+		for (E e : this.list) {
+			e.onCheckDead();
 			if (e.isDead()) {
 				toRemove.add(e);
 			}

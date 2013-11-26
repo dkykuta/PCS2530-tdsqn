@@ -62,7 +62,8 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 					.getGroups();
 
 			for (Group g : grupos) {
-				if (Vector2D.dist(this.getCenter(), g.getCenter()) < this.range) {
+				if (Vector2D.dist(this.getCenterInGameWindow(), g
+						.getCenterInGameWindow()) < this.range) {
 					pGroups.add(g);
 				}
 			}
@@ -72,7 +73,7 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 			}
 
 			// Entao eh UNIT
-			for (Group g : grupos) {
+			for (Group g : pGroups) {
 				pTargets.addAll(g.getUnits());
 			}
 		} else if (type == GameTargetType.TOWER) {
@@ -137,6 +138,10 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 				Log.e("ActionEntity", "wrapperDoAction lancou Exception", e);
 			}
 		}
+	}
+
+	@Override
+	public void onCheckDead() {
 	}
 
 }

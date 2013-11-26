@@ -1,5 +1,6 @@
 package com.aehooo.tdsqn.entity.impl;
 
+import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.input.touch.TouchEvent;
@@ -61,8 +62,7 @@ public abstract class GameEntity implements IUpdatable {
 				this.animateLinha(0);
 			} else if (texture != null) {
 				this.setSprite(new ThisGameSprite(pos.getXasInt(), pos
-						.getYasInt(),
-						texture));
+						.getYasInt(), texture));
 				this.animated = false;
 			} else {
 				throw new Exception("Sprite '" + textureName
@@ -84,9 +84,9 @@ public abstract class GameEntity implements IUpdatable {
 
 	public void shouldDie() {
 		LevelScene scene = LevelManager.getCurrentLevelScene();
+		scene.unregisterTouchArea(this.getSprite());
 		this.getSprite().detachChildren();
 		this.getSprite().detachSelf();
-		scene.unregisterTouchArea(this.getSprite());
 		this.dead = true;
 	}
 
@@ -109,13 +109,27 @@ public abstract class GameEntity implements IUpdatable {
 		this.setPos(new Vector2D(x, y));
 	}
 
+	public Vector2D getPosInGameWindow() {
+		IEntity parent = this.getSprite().getParent();
+		Vector2D ret = this.getPos();
+		while (parent != LevelManager.getCurrentLevelScene().getGameWindow()) {
+			if (parent instanceof IThisGameSprite) {
+				IThisGameSprite entity = (IThisGameSprite) parent;
+				ret = ret.add(entity.getX(), entity.getY());
+				parent = parent.getParent();
+			}
+		}
+		return ret;
+	}
+
 	public void changePos(final Vector2D change) {
 		this.setPos(this.getPos().add(change));
 	}
 
-	public Vector2D getCenter() {
-		return this.pos.add(new Vector2D(this.getSprite().getWidthScaled() / 2,
-				this.getSprite().getHeightScaled() / 2));
+	public Vector2D getCenterInGameWindow() {
+		return this.getPosInGameWindow().add(
+				new Vector2D(this.getSprite().getWidthScaled() / 2, this
+						.getSprite().getHeightScaled() / 2));
 	}
 
 	public IThisGameSprite getSprite() {

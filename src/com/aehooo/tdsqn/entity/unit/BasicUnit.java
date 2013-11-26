@@ -2,6 +2,8 @@ package com.aehooo.tdsqn.entity.unit;
 
 import org.andengine.entity.scene.Scene;
 
+import android.util.Log;
+
 import com.aehooo.tdsqn.annotations.Vel;
 import com.aehooo.tdsqn.entity.ICasterEntity;
 import com.aehooo.tdsqn.entity.ILiveEntity;
@@ -62,8 +64,13 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 
 	@Override
 	public boolean takeDamage(final int amount) {
-		this.shouldDie();
-		return false;
+		Log.i("BasicUnit", "takeDamage 1");
+		if (this.isDead()) {
+			return false;
+		}
+		Log.i("BasicUnit", "takeDamage 2");
+		this.hp -= amount;
+		return true;
 	}
 
 	@Override
@@ -106,7 +113,9 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 
 	@Override
 	public void onFrameUpdate() {
-
+		if (this.hp <= 0) {
+			this.shouldDie();
+		}
 	}
 
 	/*

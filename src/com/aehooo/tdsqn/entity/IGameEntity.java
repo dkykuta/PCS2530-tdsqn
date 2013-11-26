@@ -17,7 +17,7 @@ public interface IGameEntity {
 
 	public void changePos(final Vector2D change);
 
-	public Vector2D getCenter();
+	public Vector2D getCenterInGameWindow();
 
 	public IThisGameSprite getSprite();
 

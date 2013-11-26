@@ -20,23 +20,26 @@ public class UnitButton extends GameEntity {
 	private Class<? extends BasicUnit> clazz;
 
 	public UnitButton(final Scene fScene,
-			final Class<? extends BasicUnit> clazz,
-			final Vector2D pos) throws Exception {
+			final Class<? extends BasicUnit> clazz, final Vector2D pos)
+			throws Exception {
 		super(fScene, pos);
 		this.clazz = clazz;
 	}
 
 	public UnitButton(final Scene fScene,
-			final Class<? extends BasicUnit> clazz,
-			final int x, final int y)
+			final Class<? extends BasicUnit> clazz, final int x, final int y)
 			throws Exception {
 		this(fScene, clazz, new Vector2D(x, y));
 	}
 
 	@Override
 	public void onFrameUpdate() {
-		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onCheckDead() {
+		// TODO Auto-generated method stub
 	}
 
 	@Override

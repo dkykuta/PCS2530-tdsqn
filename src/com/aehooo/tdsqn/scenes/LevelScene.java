@@ -15,7 +15,8 @@ import com.aehooo.tdsqn.entity.button.UnitButton;
 import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.entity.impl.ListOfEntity;
 import com.aehooo.tdsqn.entity.tower.BasicTower;
-import com.aehooo.tdsqn.entity.tower.OneTower;
+import com.aehooo.tdsqn.entity.tower.TowerOne;
+import com.aehooo.tdsqn.entity.tower.TowerTwo;
 import com.aehooo.tdsqn.entity.unit.Zombie;
 import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.manager.UpdateManager;
@@ -113,20 +114,20 @@ public class LevelScene extends Scene {
 		}
 		this.groups.addEntity(g);
 
-		OneTower t;
 		try {
-			t = new OneTower(this, 200, 200);
+			BasicTower t = new TowerOne(this, 200, 200);
+			this.towers.addEntity(t);
+			t = new TowerTwo(this, 300, 200);
+			this.towers.addEntity(t);
 		} catch (Exception e) {
 			Log.i("LevelScene", "OneTower exception", e);
 			return;
 		}
-		this.towers.addEntity(t);
 
 		try {
 			UnitButton b = new UnitButton(this, Zombie.class, 10, 10);
 			LevelManager.attachOnSideBar(b);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
