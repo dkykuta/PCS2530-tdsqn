@@ -23,6 +23,7 @@ public class Group extends GameEntity implements IUpdatable {
 	private boolean walking;
 	private boolean initialized;
 	private int nextPointIdx;
+	private int nUnits;
 
 	private List<BasicUnit> unidades;
 
@@ -35,6 +36,7 @@ public class Group extends GameEntity implements IUpdatable {
 		this.walking = false;
 		this.initialized = false;
 		this.unidades = new ArrayList<BasicUnit>();
+		this.nUnits = 0;
 	}
 
 	@Override
@@ -99,20 +101,17 @@ public class Group extends GameEntity implements IUpdatable {
 		}
 	}
 
-	public void attachChild(final GameEntity e) {
-		if (e != null) {
-			this.getSprite().attachChild(e.getSprite());
-		}
-	}
-
 	public void addUnit(final BasicUnit u) {
-		if (this.initialized) {
+		int n = this.unidades.size();
+		if (this.initialized || (u == null) || (n >= 4)) {
 			return;
 		}
 
-		u.setPos(new Vector2D(0, 0));
+		u.setPos(((n / 2) * 30), ((n % 2) * 30));
 
 		this.unidades.add(u);
+
+		this.getSprite().attachChild(u.getSprite());
 
 	}
 

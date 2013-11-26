@@ -78,7 +78,7 @@ public class ImageAlligator3000 {
 		}
 
 		{
-			// map1 1400 x 960
+			// tiro1 5 x 5
 			TextureRegion tiro1 = BitmapTextureAtlasTextureRegionFactory
 					.createFromAsset(ImageAlligator3000.atlas,
 							ImageAlligator3000.bga,
@@ -87,13 +87,22 @@ public class ImageAlligator3000 {
 			ImageAlligator3000.mapaTexturas.put(TextureName.TIRO, tiro1);
 		}
 		{
-			// map1 1400 x 960
+			// torre 1 50x50
 			TextureRegion torre1 = BitmapTextureAtlasTextureRegionFactory
 					.createFromAsset(ImageAlligator3000.atlas,
 							ImageAlligator3000.bga,
 							"gfx/staticSprites/torre1.png",
 							0, 60);
 			ImageAlligator3000.mapaTexturas.put(TextureName.TORRE1, torre1);
+		}
+		{
+			// map1 1400 x 960
+			TextureRegion button = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/staticSprites/button.png",
+							50, 60);
+			ImageAlligator3000.mapaTexturas.put(TextureName.BUTTON, button);
 		}
 
 		// house1 350 x 350

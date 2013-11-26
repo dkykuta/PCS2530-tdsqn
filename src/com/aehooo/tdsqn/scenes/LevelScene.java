@@ -10,6 +10,7 @@ import org.andengine.input.touch.TouchEvent;
 
 import android.util.Log;
 
+import com.aehooo.tdsqn.entity.button.UnitButton;
 import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.entity.impl.Action;
 import com.aehooo.tdsqn.entity.impl.ListOfEntity;
@@ -22,7 +23,6 @@ import com.aehooo.tdsqn.path.Path;
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.scenes.composition.LevelBackground;
-import com.aehooo.tdsqn.utils.Vector2D;
 
 public class LevelScene extends Scene {
 
@@ -104,14 +104,6 @@ public class LevelScene extends Scene {
 	}
 
 	private void createTestUnits() {
-		Zombie zz;
-		try {
-			zz = new Zombie(this, new Vector2D(500, 500));
-		} catch (Exception e) {
-			Log.e("LevelScene", "Zombie com erro", e);
-			return;
-		}
-
 		Group g;
 		try {
 			g = new Group(this, this.path);
@@ -121,10 +113,6 @@ public class LevelScene extends Scene {
 		}
 		this.groups.addEntity(g);
 
-		g.addUnit(zz);
-
-		g.attachChild(zz);
-
 		OneTower t;
 		try {
 			t = new OneTower(this, 200, 200);
@@ -133,7 +121,14 @@ public class LevelScene extends Scene {
 			return;
 		}
 		this.towers.addEntity(t);
-		// this.bg.attachChild(t.getSprite());
+
+		try {
+			UnitButton b = new UnitButton(this, Zombie.class, 10, 10);
+			LevelManager.attachOnSideBar(b);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void initializeBasicScreen(final TextureName bgname) {

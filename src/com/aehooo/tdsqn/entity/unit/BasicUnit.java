@@ -5,6 +5,7 @@ import org.andengine.entity.scene.Scene;
 import com.aehooo.tdsqn.entity.ICasterEntity;
 import com.aehooo.tdsqn.entity.ILiveEntity;
 import com.aehooo.tdsqn.entity.impl.ActionEntity;
+import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.utils.Vector2D;
 
 public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
@@ -22,15 +23,15 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 	public static final int NORMAL_CIMA = 2;
 	public static final int NORMAL_ESQUERDA = 3;
 
-	public BasicUnit(final Scene fScene, final Vector2D pos) throws Exception {
+	private BasicUnit(final Scene fScene, final Vector2D pos) throws Exception {
 		super(fScene, pos);
 
 		this.initializeConstants();
 	}
 
-	public BasicUnit(final Scene fScene, final float pX, final float pY)
+	public BasicUnit()
 			throws Exception {
-		this(fScene, new Vector2D(pX, pY));
+		this(LevelManager.getCurrentLevelScene(), new Vector2D(0, 0));
 	}
 
 	private void initializeConstants() {
