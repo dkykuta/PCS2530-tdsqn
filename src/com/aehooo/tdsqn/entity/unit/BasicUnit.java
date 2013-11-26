@@ -2,6 +2,7 @@ package com.aehooo.tdsqn.entity.unit;
 
 import org.andengine.entity.scene.Scene;
 
+import com.aehooo.tdsqn.annotations.Vel;
 import com.aehooo.tdsqn.entity.ICasterEntity;
 import com.aehooo.tdsqn.entity.ILiveEntity;
 import com.aehooo.tdsqn.entity.impl.ActionEntity;
@@ -14,9 +15,8 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 	private int maxHp;
 	private int mp;
 	private int maxMp;
-	private double aps;
-	private int range;
-	private double cd;
+
+	private double vel;
 
 	public static final int NORMAL_BAIXO = 0;
 	public static final int NORMAL_DIREITA = 1;
@@ -38,9 +38,12 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 		this.maxHp = this.hp;
 		this.mp = 10;
 		this.maxMp = this.mp;
-		this.aps = 2;
-		this.range = 0;
-		this.cd = 0;
+
+		this.vel = 2;
+		Vel velAnn = this.getClass().getAnnotation(Vel.class);
+		if (velAnn != null) {
+			this.vel = velAnn.value();
+		}
 	}
 
 	@Override
@@ -110,6 +113,10 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 	 * Meu
 	 */
 	public abstract String getName();
+
+	public double getVel() {
+		return this.vel;
+	}
 
 	public void selectRotation(final Vector2D diff) {
 		if (diff.getY() == 0) {

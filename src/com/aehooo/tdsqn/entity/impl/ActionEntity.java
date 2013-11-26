@@ -107,8 +107,6 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 		List<? extends ITargetEntity> possibleTargets = this
 				.getPossibleTargets(type);
 
-		Log.i("ActionEntity", "possibleTargets sz " + possibleTargets.size());
-
 		if (!possibleTargets.isEmpty()) {
 			Action action = new Action(LevelManager.getCurrentLevelScene(),
 					this, possibleTargets.get(0));

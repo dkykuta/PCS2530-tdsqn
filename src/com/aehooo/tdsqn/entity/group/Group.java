@@ -8,6 +8,8 @@ import java.util.Map;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
+import android.util.Log;
+
 import com.aehooo.tdsqn.annotations.TextureInfo;
 import com.aehooo.tdsqn.entity.ILiveEntity;
 import com.aehooo.tdsqn.entity.ITargetEntity;
@@ -126,6 +128,20 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 	public double calculateVel() {
 		double vel = this.vel;
+
+		for (BasicUnit u : this.unidades) {
+			if (u.getVel() < vel) {
+				vel = u.getVel();
+			}
+		}
+
+		AttrModifier attrModifier = this.modificadores.get("vel");
+		if (attrModifier != null) {
+			Log.i("Group", "slow: " + attrModifier.getPctgTotal());
+			vel *= attrModifier.getPctgTotal();
+		} else {
+			Log.i("Group", "sem slow");
+		}
 
 		return vel;
 	}
