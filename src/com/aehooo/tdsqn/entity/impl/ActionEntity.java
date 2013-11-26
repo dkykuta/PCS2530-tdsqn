@@ -13,7 +13,9 @@ import com.aehooo.tdsqn.annotations.BuildAction;
 import com.aehooo.tdsqn.annotations.FilterTargets;
 import com.aehooo.tdsqn.annotations.SortTargets;
 import com.aehooo.tdsqn.entity.ILiveEntity;
+import com.aehooo.tdsqn.entity.ITargetEntity;
 import com.aehooo.tdsqn.entity.IUpdatable;
+import com.aehooo.tdsqn.entity.action.Action;
 import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.enums.GameTargetType;
 import com.aehooo.tdsqn.manager.LevelManager;
@@ -39,23 +41,21 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 		APS aps = this.getClass().getAnnotation(APS.class);
 		if (aps != null) {
 			this.aps = aps.value();
-		}
-		else {
+		} else {
 			this.aps = 1;
 		}
 	}
 
-	public List<? extends GameEntity> getPossibleTargets(
+	public List<? extends ITargetEntity> getPossibleTargets(
 			final GameTargetType type) {
-		List<GameEntity> pTargets = new ArrayList<GameEntity>();
+		List<ITargetEntity> pTargets = new ArrayList<ITargetEntity>();
 
 		if (type == GameTargetType.SELF) {
 			pTargets.add(this);
 		} else if ((type == GameTargetType.MYGROUP)
 				|| (type == GameTargetType.MYGROUPUNITS)) {
 
-		}
-		else if ((type == GameTargetType.GROUP)
+		} else if ((type == GameTargetType.GROUP)
 				|| (type == GameTargetType.UNIT)) {
 			List<Group> pGroups = new ArrayList<Group>();
 			List<Group> grupos = LevelManager.getCurrentLevelScene()
@@ -75,8 +75,7 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 			for (Group g : grupos) {
 				pTargets.addAll(g.getUnits());
 			}
-		}
-		else if (type == GameTargetType.TOWER) {
+		} else if (type == GameTargetType.TOWER) {
 
 		}
 
@@ -105,8 +104,10 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 		if (buildAction == null) {
 			return false;
 		}
-		List<? extends GameEntity> possibleTargets = this
+		List<? extends ITargetEntity> possibleTargets = this
 				.getPossibleTargets(type);
+
+		Log.i("ActionEntity", "possibleTargets sz " + possibleTargets.size());
 
 		if (!possibleTargets.isEmpty()) {
 			Action action = new Action(LevelManager.getCurrentLevelScene(),

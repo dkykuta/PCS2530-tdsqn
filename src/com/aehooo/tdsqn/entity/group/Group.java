@@ -1,13 +1,18 @@
 package com.aehooo.tdsqn.entity.group;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
 import com.aehooo.tdsqn.annotations.TextureInfo;
+import com.aehooo.tdsqn.entity.ILiveEntity;
+import com.aehooo.tdsqn.entity.ITargetEntity;
 import com.aehooo.tdsqn.entity.IUpdatable;
+import com.aehooo.tdsqn.entity.impl.AttrModifier;
 import com.aehooo.tdsqn.entity.impl.GameEntity;
 import com.aehooo.tdsqn.entity.unit.BasicUnit;
 import com.aehooo.tdsqn.path.Path;
@@ -15,7 +20,7 @@ import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.utils.Vector2D;
 
 @TextureInfo(name = TextureName.GROUP, linhas = { "normal" })
-public class Group extends GameEntity implements IUpdatable {
+public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 	private Vector2D direction;
 	private double vel;
@@ -23,7 +28,7 @@ public class Group extends GameEntity implements IUpdatable {
 	private boolean walking;
 	private boolean initialized;
 	private int nextPointIdx;
-	private int nUnits;
+	private Map<String, AttrModifier> modificadores;
 
 	private List<BasicUnit> unidades;
 
@@ -36,7 +41,8 @@ public class Group extends GameEntity implements IUpdatable {
 		this.walking = false;
 		this.initialized = false;
 		this.unidades = new ArrayList<BasicUnit>();
-		this.nUnits = 0;
+		this.modificadores = new HashMap<String, AttrModifier>();
+
 	}
 
 	@Override
@@ -95,8 +101,7 @@ public class Group extends GameEntity implements IUpdatable {
 					this.nextPointIdx);
 
 			this.walk(remaining);
-		}
-		else {
+		} else {
 			this.setPos(newpos);
 		}
 	}
@@ -119,11 +124,52 @@ public class Group extends GameEntity implements IUpdatable {
 		return this.unidades;
 	}
 
-	@Override
-	public void onFrameUpdate() {
-		if (this.walking) {
-			this.walk(this.vel);
-		}
+	public double calculateVel() {
+		double vel = this.vel;
+
+		return vel;
 	}
 
+	@Override
+	public void onFrameUpdate() {
+		List<BasicUnit> mortos = new ArrayList<BasicUnit>();
+		if (this.walking) {
+			this.walk(this.calculateVel());
+		}
+		for (BasicUnit u : this.unidades) {
+			u.onFrameUpdate();
+			if (u.isDead()) {
+				mortos.add(u);
+			}
+		}
+
+		this.unidades.removeAll(mortos);
+	}
+
+	@Override
+	public boolean takeDamage(final int amount) {
+		for (BasicUnit u : this.unidades) {
+			u.getSprite().detachSelf();
+		}
+		this.unidades.clear();
+		return false;
+	}
+
+	@Override
+	public boolean receiveHeal(final int amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean slow(final ILiveEntity origin, final double pctg,
+			final int framesDur) {
+		AttrModifier attrModifier = this.modificadores.get("vel");
+		if (attrModifier == null) {
+			attrModifier = new AttrModifier();
+			this.modificadores.put("vel", attrModifier);
+		}
+		attrModifier.put(origin, pctg, framesDur);
+		return false;
+	}
 }

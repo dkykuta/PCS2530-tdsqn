@@ -29,8 +29,7 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 		this.initializeConstants();
 	}
 
-	public BasicUnit()
-			throws Exception {
+	public BasicUnit() throws Exception {
 		this(LevelManager.getCurrentLevelScene(), new Vector2D(0, 0));
 	}
 
@@ -60,11 +59,18 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 
 	@Override
 	public boolean takeDamage(final int amount) {
+		this.shouldDie();
 		return false;
 	}
 
 	@Override
 	public boolean receiveHeal(final int amount) {
+		return false;
+	}
+
+	@Override
+	public boolean slow(final ILiveEntity origin, final double pctg,
+			final int framesDur) {
 		return false;
 	}
 

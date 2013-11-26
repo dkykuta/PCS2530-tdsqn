@@ -55,6 +55,12 @@ public abstract class BasicTower extends ActionEntity implements ILiveEntity {
 		return false;
 	}
 
+	@Override
+	public boolean slow(final ILiveEntity origin, final double pctg,
+			final int framesDur) {
+		return false;
+	}
+
 	/*
 	 * Meu
 	 */

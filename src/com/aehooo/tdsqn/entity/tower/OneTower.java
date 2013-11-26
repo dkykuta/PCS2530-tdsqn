@@ -2,10 +2,12 @@ package com.aehooo.tdsqn.entity.tower;
 
 import org.andengine.entity.scene.Scene;
 
+import android.util.Log;
+
 import com.aehooo.tdsqn.annotations.APS;
 import com.aehooo.tdsqn.annotations.BuildAction;
 import com.aehooo.tdsqn.annotations.TextureInfo;
-import com.aehooo.tdsqn.entity.impl.Action;
+import com.aehooo.tdsqn.entity.action.Action;
 import com.aehooo.tdsqn.enums.GameTargetType;
 import com.aehooo.tdsqn.resources.TextureName;
 
@@ -25,7 +27,7 @@ public class OneTower extends BasicTower {
 
 	@BuildAction(targetType = GameTargetType.GROUP)
 	public void buildAction(final Action action) {
-
+		Log.i("OneTower", "build");
+		action.slow(0.5, 30, 0);
 	}
-
 }
