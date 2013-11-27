@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.util.Log;
+
 import com.aehooo.tdsqn.entity.ILiveEntity;
 import com.aehooo.tdsqn.entity.IUpdatable;
 
@@ -39,17 +41,11 @@ public class AttrModifier implements IUpdatable {
 
 	@Override
 	public void onFrameUpdate() {
-		List<ILiveEntity> toRemove = new ArrayList<ILiveEntity>();
+		Log.i("AttrMod", "update");
 		for (Entry<ILiveEntity, AttrModifierPart> entry : this.modifiers
 				.entrySet()) {
 			AttrModifierPart part = entry.getValue();
 			part.onFrameUpdate();
-			if (part.dead) {
-				toRemove.add(entry.getKey());
-			}
-		}
-		for (ILiveEntity e : toRemove) {
-			this.modifiers.remove(e);
 		}
 
 	}

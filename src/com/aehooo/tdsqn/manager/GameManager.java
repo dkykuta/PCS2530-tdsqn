@@ -11,6 +11,7 @@ public class GameManager {
 
 	public static void exit() {
 		bga.finish();
+		System.exit(0);
 	}
 
 }

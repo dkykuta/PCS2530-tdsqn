@@ -121,7 +121,9 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 				for (BasicUnit u : this.unidades) {
 					u.setTerminouPercurso(true);
 				}
+				Log.i("Group", "shouldDie");
 				this.shouldDie();
+				Log.i("Group", "returning");
 				return;
 			}
 			this.direction = this.path.getDir(this.nextPointIdx - 1,
@@ -169,20 +171,33 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 	}
 
 	@Override
-	public void onFrameUpdate() {
-		if (this.walking) {
-			this.walk(this.calculateVel());
+	public void shouldDie() {
+		for (BasicUnit u : this.unidades) {
+			u.shouldDie();
 		}
+		super.shouldDie();
+	}
+
+	@Override
+	public void onFrameUpdate() {
 		for (BasicUnit u : this.unidades) {
 			u.onFrameUpdate();
+		}
+		for (AttrModifier mod : this.modificadores.values()) {
+			mod.onFrameUpdate();
+		}
+		if (this.walking) {
+			this.walk(this.calculateVel());
 		}
 	}
 
 	@Override
 	public void onCheckDeadChildren() {
+		for (AttrModifier mod : this.modificadores.values()) {
+			mod.onCheckDeadChildren();
+		}
 		List<BasicUnit> mortos = new ArrayList<BasicUnit>();
 		for (BasicUnit u : this.unidades) {
-			u.onFrameUpdate();
 			if (u.isDead()) {
 				mortos.add(u);
 			}

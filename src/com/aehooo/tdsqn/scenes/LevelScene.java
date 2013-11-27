@@ -15,6 +15,7 @@ import com.aehooo.tdsqn.entity.action.Action;
 import com.aehooo.tdsqn.entity.button.LostTheGameBanner;
 import com.aehooo.tdsqn.entity.button.ReiButton;
 import com.aehooo.tdsqn.entity.button.UnitButton;
+import com.aehooo.tdsqn.entity.button.WinTheGameBanner;
 import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.entity.impl.ListOfEntity;
 import com.aehooo.tdsqn.entity.tower.BasicTower;
@@ -200,9 +201,8 @@ public class LevelScene extends Scene implements IUpdatable {
 				|| LevelManager.isGameEnd()) {
 			if (LevelManager.isWinner()) {
 				try {
-					LostTheGameBanner lost = new LostTheGameBanner(this, 200,
-							140);
-					LevelManager.attachOnScreen((Sprite) lost.getSprite());
+					WinTheGameBanner win = new WinTheGameBanner(this, 200, 140);
+					LevelManager.attachOnScreen((Sprite) win.getSprite());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
