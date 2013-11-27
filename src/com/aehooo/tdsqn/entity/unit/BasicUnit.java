@@ -18,12 +18,14 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 	private int mp;
 	private int maxMp;
 
+	private boolean terminouPercurso;
+
 	private double vel;
 
 	public static final int NORMAL_BAIXO = 0;
 	public static final int NORMAL_DIREITA = 1;
-	public static final int NORMAL_CIMA = 2;
-	public static final int NORMAL_ESQUERDA = 3;
+	public static final int NORMAL_CIMA = 3;
+	public static final int NORMAL_ESQUERDA = 2;
 
 	private BasicUnit(final Scene fScene, final Vector2D pos) throws Exception {
 		super(fScene, pos);
@@ -40,6 +42,7 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 		this.maxHp = this.hp;
 		this.mp = 10;
 		this.maxMp = this.mp;
+		this.terminouPercurso = false;
 
 		this.vel = 2;
 		Vel velAnn = this.getClass().getAnnotation(Vel.class);
@@ -75,8 +78,6 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 
 	@Override
 	public boolean receiveHeal(final int amount) {
-		this.getSprite().setBlue(0);
-		this.getSprite().setRed(0);
 		if (this.hp == this.maxHp) {
 			return false;
 		}
@@ -135,6 +136,14 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 
 	public double getVel() {
 		return this.vel;
+	}
+
+	public void setTerminouPercurso(final boolean b) {
+		this.terminouPercurso = b;
+	}
+
+	public boolean terminouPercurso() {
+		return this.terminouPercurso;
 	}
 
 	public void selectRotation(final Vector2D diff) {

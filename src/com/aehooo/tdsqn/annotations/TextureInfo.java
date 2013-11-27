@@ -12,5 +12,5 @@ import com.aehooo.tdsqn.resources.TextureName;
 public @interface TextureInfo {
 	public TextureName name();
 
-	public String[] linhas();
+	public int linhas() default 1;
 }

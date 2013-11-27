@@ -11,20 +11,18 @@ import com.aehooo.tdsqn.entity.action.Action;
 import com.aehooo.tdsqn.enums.GameTargetType;
 import com.aehooo.tdsqn.resources.TextureName;
 
-@TextureInfo(name = TextureName.ZOMBIE, linhas = { "normal-baixo",
-		"normal-direita", "normal-cima", "normal-esquerda" })
+@TextureInfo(name = TextureName.HEALER, linhas = 4)
 @APS(0.2)
-@Vel(0.5)
+@Vel(2)
 public class Healer extends BasicUnit {
 
 	public Healer() throws Exception {
 		super();
-		this.getSprite().setRed(0);
 	}
 
 	@Override
 	public String getName() {
-		return "Zombie";
+		return "Healer";
 	}
 
 	@FilterTargets

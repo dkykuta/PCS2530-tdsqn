@@ -9,23 +9,23 @@ import com.aehooo.tdsqn.entity.action.Action;
 import com.aehooo.tdsqn.enums.GameTargetType;
 import com.aehooo.tdsqn.resources.TextureName;
 
-@TextureInfo(linhas = { "" }, name = TextureName.TORRE1)
-@APS(2)
-public class TowerOne extends BasicTower {
+@TextureInfo(name = TextureName.TORRE_MELANCIA)
+@APS(0.7)
+public class TowerMelancia extends BasicTower {
 
-	public TowerOne(final Scene fScene, final float pX, final float pY)
+	public TowerMelancia(final Scene fScene, final float pX, final float pY)
 			throws Exception {
 		super(fScene, pX, pY);
 	}
 
 	@Override
 	public String getName() {
-		return "OneTower";
+		return "TowerMelancia";
 	}
 
-	@BuildAction(targetType = GameTargetType.GROUP)
+	@BuildAction(targetType = GameTargetType.UNIT)
 	public void buildAction(final Action action) {
-		action.getSprite().setRed(0);
-		action.slow(0.5, 30, 0);
+		action.getSprite().setBlue(0);
+		action.damage(1, 0);
 	}
 }

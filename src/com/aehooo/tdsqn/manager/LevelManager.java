@@ -8,6 +8,8 @@ import com.aehooo.tdsqn.scenes.LevelScene;
 public class LevelManager {
 	private static LevelScene currentLevel;
 	private static UpdateManager updateManager;
+	private static boolean gameEnd = false;
+	private static boolean winner = false;
 
 	public static void changeLevelScene(final LevelScene curr) {
 		LevelManager.currentLevel = curr;
@@ -38,8 +40,20 @@ public class LevelManager {
 		LevelManager.updateManager = updateManager;
 	}
 
+	public static void setWinner(final boolean b) {
+		winner = b;
+	}
+
 	public static boolean isWinner() {
-		return false;
+		return winner;
+	}
+
+	public static void setGameEnd(final boolean b) {
+		gameEnd = b;
+	}
+
+	public static boolean isGameEnd() {
+		return gameEnd;
 	}
 
 }

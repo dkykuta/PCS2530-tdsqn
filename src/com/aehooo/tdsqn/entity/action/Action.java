@@ -14,7 +14,7 @@ import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.utils.Vector2D;
 
-@TextureInfo(name = TextureName.TIRO, linhas = { "" })
+@TextureInfo(name = TextureName.TIRO)
 public class Action extends GameEntity implements IUpdatable {
 	private double vel;
 	private ILiveEntity origin;

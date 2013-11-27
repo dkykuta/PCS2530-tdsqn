@@ -85,14 +85,6 @@ public class ImageAlligator3000 {
 			ImageAlligator3000.mapaTexturas.put(TextureName.TIRO, tiro1);
 		}
 		{
-			// torre 1 50x50
-			TextureRegion torre1 = BitmapTextureAtlasTextureRegionFactory
-					.createFromAsset(ImageAlligator3000.atlas,
-							ImageAlligator3000.bga,
-							"gfx/staticSprites/torre1.png", 0, 60);
-			ImageAlligator3000.mapaTexturas.put(TextureName.TORRE1, torre1);
-		}
-		{
 			// button 80 x 80
 			TextureRegion button = BitmapTextureAtlasTextureRegionFactory
 					.createFromAsset(ImageAlligator3000.atlas,
@@ -110,11 +102,120 @@ public class ImageAlligator3000 {
 			ImageAlligator3000.mapaTexturas.put(TextureName.LOST, lost);
 		}
 
-		// house1 350 x 350
-		// TextureRegion house1 =
-		// BitmapTextureAtlasTextureRegionFactory.createFromAsset(atlas, bga,
-		// "gfx/staticSprites/icon-house1.gif", 0, 0);
-		// mapaTexturas.put(ImageNameList.HOUSE1, house1);
+		// imagens
+
+		// de
+
+		// verdade
+
+		//
+		// IMAGENS DE VERDADE
+		ImageAlligator3000.newAtlas(2048, 1024);
+		{
+			// background 1400 x 960
+			TextureRegion texture = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/newSprites/background.png", 0, 0);
+			ImageAlligator3000.mapaTexturas.put(TextureName.MAPA1_BG, texture);
+		}
+		{
+			// menu_superior 319 x 49
+			TextureRegion texture = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/newSprites/menu_superior1.png", 0, 960);
+			ImageAlligator3000.mapaTexturas.put(TextureName.MENU_SUPERIOR,
+					texture);
+		}
+		{
+			// background 1400 x 960
+			TextureRegion texture = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/newSprites/menu_lateral_fundo1.png", 1400, 0);
+			ImageAlligator3000.mapaTexturas.put(TextureName.BARRA_LATERAL,
+					texture);
+		}
+		{
+			// tela perdeu 400 x 200
+			TextureRegion texture = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/newSprites/tela_perdeu.png", 1400, 480);
+			ImageAlligator3000.mapaTexturas.put(TextureName.LOST, texture);
+		}
+		{
+			TiledTextureRegion animacao = BitmapTextureAtlasTextureRegionFactory
+					.createTiledFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/newSprites/healer1.png", 1500, 0, 3, 4);
+			ImageAlligator3000.mapaTiledTexturas.put(TextureName.HEALER,
+					animacao);
+		}
+		{
+			TiledTextureRegion animacao = BitmapTextureAtlasTextureRegionFactory
+					.createTiledFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga, "gfx/newSprites/rei.png",
+							1665, 0, 3, 4);
+			ImageAlligator3000.mapaTiledTexturas.put(TextureName.REI, animacao);
+		}
+		{
+			TiledTextureRegion animacao = BitmapTextureAtlasTextureRegionFactory
+					.createTiledFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga, "gfx/newSprites/dps.png",
+							1830, 0, 3, 4);
+			ImageAlligator3000.mapaTiledTexturas.put(TextureName.DPS, animacao);
+		}
+		{
+			TiledTextureRegion animacao = BitmapTextureAtlasTextureRegionFactory
+					.createTiledFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga, "gfx/newSprites/tank.png",
+							1500, 220, 3, 4);
+			ImageAlligator3000.mapaTiledTexturas
+					.put(TextureName.TANK, animacao);
+		}
+		{
+			TiledTextureRegion animacao = BitmapTextureAtlasTextureRegionFactory
+					.createTiledFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/newSprites/support.png", 1665, 220, 3, 4);
+			ImageAlligator3000.mapaTiledTexturas.put(TextureName.SUPPORT,
+					animacao);
+		}
+		{
+			// group 300x100
+			TiledTextureRegion animacao = BitmapTextureAtlasTextureRegionFactory
+					.createTiledFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga, "gfx/newSprites/group.png",
+							1400, 880, 3, 1);
+			ImageAlligator3000.mapaTiledTexturas.put(TextureName.GROUP,
+					animacao);
+		}
+
+		//
+		// TORRES
+		//
+		newAtlas(512, 256);
+		{
+			// TORRE 250 x 250
+			TextureRegion texture = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/newSprites/torre_banana.png", 0, 0);
+			ImageAlligator3000.mapaTexturas.put(TextureName.TORRE_BANANA,
+					texture);
+		}
+		{
+			// TORRE 250 x 250
+			TextureRegion texture = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/newSprites/torre_melancia.png", 250, 0);
+			ImageAlligator3000.mapaTexturas.put(TextureName.TORRE_MELANCIA,
+					texture);
+		}
+
 	}
 
 	public static void newAtlas(final int width, final int height) {

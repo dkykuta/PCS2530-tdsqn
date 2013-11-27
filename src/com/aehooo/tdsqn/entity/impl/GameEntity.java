@@ -59,7 +59,7 @@ public abstract class GameEntity implements IUpdatable {
 
 			if (tiledTexture != null) {
 				this.colunas = tiledTexture.getTileCount()
-						/ annotation.linhas().length;
+						/ annotation.linhas();
 				this.setSprite(new ThisGameAnimatedSprite(pos.getXasInt(), pos
 						.getYasInt(), tiledTexture));
 				this.animated = true;

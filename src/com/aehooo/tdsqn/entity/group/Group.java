@@ -20,7 +20,7 @@ import com.aehooo.tdsqn.path.Path;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.utils.Vector2D;
 
-@TextureInfo(name = TextureName.GROUP, linhas = { "normal" })
+@TextureInfo(name = TextureName.GROUP)
 public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 	private Vector2D direction;
@@ -99,7 +99,6 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 		for (Group g : LevelManager.getCurrentLevelScene().getGroups()) {
 			if ((this != g) && this.getSprite().collidesWith(g.getSprite())
 					&& g.isAhead(this)) {
-				this.walking = false;
 				return;
 			}
 		}
@@ -115,6 +114,9 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 			this.nextPointIdx++;
 			if (this.nextPointIdx >= this.path.size()) {
 				this.direction = null;
+				for (BasicUnit u : this.unidades) {
+					u.setTerminouPercurso(true);
+				}
 				this.shouldDie();
 				return;
 			}
@@ -133,7 +135,7 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 			return;
 		}
 
-		u.setPos(((n / 2) * 30), ((n % 2) * 30));
+		u.setPos(((n / 2) * 40), ((n % 2) * 40));
 
 		this.unidades.add(u);
 

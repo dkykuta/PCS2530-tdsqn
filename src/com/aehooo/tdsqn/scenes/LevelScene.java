@@ -13,14 +13,18 @@ import android.util.Log;
 import com.aehooo.tdsqn.entity.IUpdatable;
 import com.aehooo.tdsqn.entity.action.Action;
 import com.aehooo.tdsqn.entity.button.LostTheGameBanner;
+import com.aehooo.tdsqn.entity.button.ReiButton;
 import com.aehooo.tdsqn.entity.button.UnitButton;
 import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.entity.impl.ListOfEntity;
 import com.aehooo.tdsqn.entity.tower.BasicTower;
-import com.aehooo.tdsqn.entity.tower.TowerOne;
-import com.aehooo.tdsqn.entity.tower.TowerTwo;
+import com.aehooo.tdsqn.entity.tower.TowerBanana;
+import com.aehooo.tdsqn.entity.tower.TowerMelancia;
+import com.aehooo.tdsqn.entity.unit.Dps;
 import com.aehooo.tdsqn.entity.unit.Healer;
-import com.aehooo.tdsqn.entity.unit.Zombie;
+import com.aehooo.tdsqn.entity.unit.Rei;
+import com.aehooo.tdsqn.entity.unit.Support;
+import com.aehooo.tdsqn.entity.unit.Tank;
 import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.manager.UpdateManager;
 import com.aehooo.tdsqn.path.Path;
@@ -55,14 +59,14 @@ public class LevelScene extends Scene implements IUpdatable {
 
 		this.path = new Path();
 
-		this.path.addPonto(0, 60);
-		this.path.addPonto(500, 60);
-		this.path.addPonto(500, 800);
-		this.path.addPonto(1000, 800);
-		this.path.addPonto(1000, 600);
-		this.path.addPonto(800, 600);
-		this.path.addPonto(800, 400);
-		this.path.addPonto(1340, 400);
+		this.path.addPonto(0, 100);
+		this.path.addPonto(400, 100);
+		this.path.addPonto(400, 800);
+		this.path.addPonto(1100, 800);
+		this.path.addPonto(1100, 550);
+		this.path.addPonto(800, 550);
+		this.path.addPonto(800, 250);
+		this.path.addPonto(1340, 250);
 
 		this.actions = new ListOfEntity<Action>();
 
@@ -131,9 +135,16 @@ public class LevelScene extends Scene implements IUpdatable {
 	private void createTestUnits() {
 
 		try {
-			BasicTower t = new TowerOne(this, 200, 200);
+			BasicTower t = new TowerMelancia(this, 170, 150);
 			this.towers.addEntity(t);
-			t = new TowerTwo(this, 300, 200);
+
+			t = new TowerBanana(this, 475, 550);
+			this.towers.addEntity(t);
+
+			t = new TowerMelancia(this, 850, 0);
+			this.towers.addEntity(t);
+
+			t = new TowerBanana(this, 1000, 0);
 			this.towers.addEntity(t);
 		} catch (Exception e) {
 			Log.i("LevelScene", "OneTower exception", e);
@@ -141,11 +152,19 @@ public class LevelScene extends Scene implements IUpdatable {
 		}
 
 		try {
-			UnitButton b = new UnitButton(this, Zombie.class, 10, 10);
+			UnitButton b = new UnitButton(this, Tank.class, 10, 10);
 			LevelManager.attachOnSideBar(b);
 
 			b = new UnitButton(this, Healer.class, 10, 100);
-			b.getSprite().setGreen(0.2f);
+			LevelManager.attachOnSideBar(b);
+
+			b = new UnitButton(this, Dps.class, 10, 190);
+			LevelManager.attachOnSideBar(b);
+
+			b = new UnitButton(this, Support.class, 10, 280);
+			LevelManager.attachOnSideBar(b);
+
+			b = new ReiButton(this, Rei.class, 10, 370);
 			LevelManager.attachOnSideBar(b);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -177,13 +196,18 @@ public class LevelScene extends Scene implements IUpdatable {
 
 	@Override
 	public void onFrameUpdate() {
-		if ((this.nGroups == MAX_GROUPS) && this.groups.getList().isEmpty()
-				&& !LevelManager.isWinner()) {
-			try {
-				LostTheGameBanner lost = new LostTheGameBanner(this, 200, 140);
-				LevelManager.attachOnScreen((Sprite) lost.getSprite());
-			} catch (Exception e) {
-				e.printStackTrace();
+		if (((this.nGroups == MAX_GROUPS) && this.groups.getList().isEmpty())
+				|| LevelManager.isGameEnd()) {
+			if (LevelManager.isWinner()) {
+
+			} else {
+				try {
+					LostTheGameBanner lost = new LostTheGameBanner(this, 200,
+							140);
+					LevelManager.attachOnScreen((Sprite) lost.getSprite());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 

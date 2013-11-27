@@ -9,7 +9,7 @@ import com.aehooo.tdsqn.manager.GameManager;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.utils.Vector2D;
 
-@TextureInfo(linhas = { "" }, name = TextureName.LOST)
+@TextureInfo(name = TextureName.LOST)
 public class LostTheGameBanner extends GameEntity {
 
 	public LostTheGameBanner(final Scene fScene, final Vector2D pos)
