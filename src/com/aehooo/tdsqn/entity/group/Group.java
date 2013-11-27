@@ -15,6 +15,7 @@ import com.aehooo.tdsqn.entity.IUpdatable;
 import com.aehooo.tdsqn.entity.impl.AttrModifier;
 import com.aehooo.tdsqn.entity.impl.GameEntity;
 import com.aehooo.tdsqn.entity.unit.BasicUnit;
+import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.path.Path;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.utils.Vector2D;
@@ -81,10 +82,26 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 		}
 	}
 
+	public boolean isAhead(final Group g) {
+		Vector2D v = g.getPos().sub(this.getPos()).normalize();
+		double dx = v.getX() * this.direction.getX();
+		double dy = v.getY() * this.direction.getY();
+
+		return (dx < 0) || (dy < 0);
+	}
+
 	public void walk(final double dRemain) {
 		if (this.direction == null) {
 			this.walking = false;
 			return;
+		}
+
+		for (Group g : LevelManager.getCurrentLevelScene().getGroups()) {
+			if ((this != g) && this.getSprite().collidesWith(g.getSprite())
+					&& g.isAhead(this)) {
+				this.walking = false;
+				return;
+			}
 		}
 		Vector2D newpos = this.getPos().add(this.direction.mul(dRemain));
 		Vector2D nextPoint = this.path.getPoint(this.nextPointIdx);
@@ -156,7 +173,7 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 	}
 
 	@Override
-	public void onCheckDead() {
+	public void onCheckDeadChildren() {
 		List<BasicUnit> mortos = new ArrayList<BasicUnit>();
 		for (BasicUnit u : this.unidades) {
 			u.onFrameUpdate();

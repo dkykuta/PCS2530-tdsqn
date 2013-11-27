@@ -28,7 +28,7 @@ public class LostTheGameBanner extends GameEntity {
 	}
 
 	@Override
-	public void onCheckDead() {
+	public void onCheckDeadChildren() {
 		// TODO Auto-generated method stub
 	}
 

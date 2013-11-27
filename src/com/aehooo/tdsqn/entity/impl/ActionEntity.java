@@ -129,6 +129,10 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 			filteredTargets = possibleTargets;
 		}
 
+		if (sort != null) {
+			// pode-se usar o Lists?
+		}
+
 		if (!filteredTargets.isEmpty()) {
 			Action action = new Action(LevelManager.getCurrentLevelScene(),
 					this, possibleTargets.get(0));
@@ -162,7 +166,7 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 	}
 
 	@Override
-	public void onCheckDead() {
+	public void onCheckDeadChildren() {
 	}
 
 }

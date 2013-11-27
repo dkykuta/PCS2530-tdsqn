@@ -39,6 +39,19 @@ public class Healer extends BasicUnit {
 		return true;
 	}
 
+	public boolean compare(final ITargetEntity e1, final ITargetEntity e2) {
+		if (!(e1 instanceof ILiveEntity)) {
+			return false;
+		}
+		if (!(e2 instanceof ILiveEntity)) {
+			return true;
+		}
+		ILiveEntity u1 = (ILiveEntity) e1;
+		ILiveEntity u2 = (ILiveEntity) e2;
+
+		return u1.getPorcentagemHP() < u2.getPorcentagemHP();
+	}
+
 	@BuildAction(targetType = GameTargetType.UNIT)
 	public void buildAction(final Action action) {
 		action.getSprite().setBlue(0);

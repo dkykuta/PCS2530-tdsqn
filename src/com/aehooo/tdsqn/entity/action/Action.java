@@ -57,7 +57,7 @@ public class Action extends GameEntity implements IUpdatable {
 	}
 
 	@Override
-	public void onCheckDead() {
+	public void onCheckDeadChildren() {
 		// TODO Auto-generated method stub
 	}
 

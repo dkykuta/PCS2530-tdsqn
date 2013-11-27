@@ -50,10 +50,10 @@ public class ListOfEntity<E extends GameEntity> implements IUpdatable {
 	}
 
 	@Override
-	public void onCheckDead() {
+	public void onCheckDeadChildren() {
 		List<E> toRemove = new ArrayList<E>();
 		for (E e : this.list) {
-			e.onCheckDead();
+			e.onCheckDeadChildren();
 			if (e.isDead()) {
 				toRemove.add(e);
 			}

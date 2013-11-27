@@ -30,7 +30,7 @@ public class UpdateManager implements IUpdateHandler {
 				e.onFrameUpdate();
 			}
 			for (IUpdatable e : cpList) {
-				e.onCheckDead();
+				e.onCheckDeadChildren();
 			}
 		}
 	}

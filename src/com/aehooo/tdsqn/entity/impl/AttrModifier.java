@@ -55,7 +55,7 @@ public class AttrModifier implements IUpdatable {
 	}
 
 	@Override
-	public void onCheckDead() {
+	public void onCheckDeadChildren() {
 		List<ILiveEntity> toRemove = new ArrayList<ILiveEntity>();
 		for (Entry<ILiveEntity, AttrModifierPart> entry : this.modifiers
 				.entrySet()) {
@@ -96,7 +96,7 @@ public class AttrModifier implements IUpdatable {
 		}
 
 		@Override
-		public void onCheckDead() {
+		public void onCheckDeadChildren() {
 		}
 	}
 }

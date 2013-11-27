@@ -190,7 +190,7 @@ public class LevelScene extends Scene implements IUpdatable {
 	}
 
 	@Override
-	public void onCheckDead() {
+	public void onCheckDeadChildren() {
 		// TODO Auto-generated method stub
 
 	}
