@@ -41,7 +41,6 @@ public class Action extends GameEntity implements IUpdatable {
 
 		if (targetCenter.isBetween(this.getPos(), newpos)) {
 			this.execute();
-			this.shouldDie();
 		} else {
 			this.setPos(newpos);
 		}
@@ -71,6 +70,7 @@ public class Action extends GameEntity implements IUpdatable {
 		for (ActionPart part : this.parts) {
 			part.execute();
 		}
+		this.shouldDie();
 	}
 
 	public void damage(final int dano, final int mpCost) {

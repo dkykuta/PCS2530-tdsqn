@@ -54,7 +54,7 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 		if (type == GameTargetType.SELF) {
 			pTargets.add(this);
 		} else if ((type == GameTargetType.MYGROUP)
-				|| (type == GameTargetType.MYGROUPUNITS)) {
+				|| (type == GameTargetType.MYGROUPUNIT)) {
 
 		} else if ((type == GameTargetType.GROUP)
 				|| (type == GameTargetType.UNIT)) {
@@ -77,6 +77,16 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 			for (Group g : pGroups) {
 				pTargets.addAll(g.getUnits());
 			}
+		} else if (type == GameTargetType.COLLIDINGGROUP) {
+			List<Group> pGroups = new ArrayList<Group>();
+			List<Group> grupos = LevelManager.getCurrentLevelScene()
+					.getGroups();
+
+			for (Group g : grupos) {
+				if (g.getSprite().collidesWith(this.getSprite())) {
+					pGroups.add(g);
+				}
+			}
 		} else if (type == GameTargetType.TOWER) {
 			List<BasicTower> towers = LevelManager.getCurrentLevelScene()
 					.getTowers();
@@ -97,6 +107,8 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 		Method sort = null;
 		Method buildAction = null;
 		GameTargetType type = null;
+		boolean aoe = false;
+		boolean instant = false;
 		for (Method method : declaredMethods) {
 			if (method.getAnnotation(FilterTargets.class) != null) {
 				filter = method;
@@ -108,6 +120,8 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 			if (baAnn != null) {
 				buildAction = method;
 				type = baAnn.targetType();
+				aoe = baAnn.AoE();
+				instant = baAnn.instant();
 			}
 		}
 		if (buildAction == null) {
@@ -129,16 +143,32 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 			filteredTargets = possibleTargets;
 		}
 
+		List<ITargetEntity> sortedTargets;
+
 		if (sort != null) {
 			// pode-se usar o Lists?
+			sortedTargets = filteredTargets;
+		} else {
+			sortedTargets = filteredTargets;
 		}
 
-		if (!filteredTargets.isEmpty()) {
-			Action action = new Action(LevelManager.getCurrentLevelScene(),
-					this, possibleTargets.get(0));
-			buildAction.invoke(this, action);
+		if (!sortedTargets.isEmpty()) {
+			for (ITargetEntity entity : sortedTargets) {
+				Action action = new Action(LevelManager.getCurrentLevelScene(),
+						this, entity);
+				buildAction.invoke(this, action);
 
-			action.assembly();
+				action.assembly();
+
+				if (instant) {
+					action.execute();
+				}
+
+				if (!aoe) {
+					break;
+				}
+			}
+
 			return true;
 		}
 

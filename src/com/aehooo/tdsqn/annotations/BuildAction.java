@@ -11,4 +11,8 @@ import com.aehooo.tdsqn.enums.GameTargetType;
 @Target(ElementType.METHOD)
 public @interface BuildAction {
 	public GameTargetType targetType();
+
+	public boolean AoE() default false;
+
+	public boolean instant() default false;
 }

@@ -2,10 +2,12 @@ package com.aehooo.tdsqn.entity.barragem;
 
 import org.andengine.entity.scene.Scene;
 
+import com.aehooo.tdsqn.annotations.APS;
 import com.aehooo.tdsqn.entity.ILiveEntity;
 import com.aehooo.tdsqn.entity.impl.ActionEntity;
 import com.aehooo.tdsqn.utils.Vector2D;
 
+@APS(60)
 public abstract class BasicBarragem extends ActionEntity implements ILiveEntity {
 	private int hp;
 	private int maxHp;
