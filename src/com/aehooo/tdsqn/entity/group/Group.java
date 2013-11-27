@@ -8,6 +8,8 @@ import java.util.Map;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
+import android.util.Log;
+
 import com.aehooo.tdsqn.annotations.TextureInfo;
 import com.aehooo.tdsqn.entity.ILiveEntity;
 import com.aehooo.tdsqn.entity.ITargetEntity;
@@ -112,7 +114,9 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 			this.setPos(nextPoint);
 			this.nextPointIdx++;
+			Log.i("Group", "pre teste");
 			if (this.nextPointIdx >= this.path.size()) {
+				Log.i("Group", "acabou");
 				this.direction = null;
 				for (BasicUnit u : this.unidades) {
 					u.setTerminouPercurso(true);

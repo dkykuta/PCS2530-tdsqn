@@ -199,7 +199,13 @@ public class LevelScene extends Scene implements IUpdatable {
 		if (((this.nGroups == MAX_GROUPS) && this.groups.getList().isEmpty())
 				|| LevelManager.isGameEnd()) {
 			if (LevelManager.isWinner()) {
-
+				try {
+					LostTheGameBanner lost = new LostTheGameBanner(this, 200,
+							140);
+					LevelManager.attachOnScreen((Sprite) lost.getSprite());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else {
 				try {
 					LostTheGameBanner lost = new LostTheGameBanner(this, 200,

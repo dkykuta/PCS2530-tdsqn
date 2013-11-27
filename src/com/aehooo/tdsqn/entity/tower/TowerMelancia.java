@@ -26,6 +26,6 @@ public class TowerMelancia extends BasicTower {
 	@BuildAction(targetType = GameTargetType.UNIT)
 	public void buildAction(final Action action) {
 		action.getSprite().setBlue(0);
-		action.damage(1, 0);
+		action.damage(10, 0);
 	}
 }

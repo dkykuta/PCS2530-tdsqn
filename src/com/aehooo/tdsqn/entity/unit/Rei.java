@@ -15,9 +15,9 @@ public class Rei extends BasicUnit {
 
 	@Override
 	public void shouldDie() {
-		super.shouldDie();
 		LevelManager.setWinner(this.terminouPercurso());
 		LevelManager.setGameEnd(true);
+		super.shouldDie();
 	}
 
 	@Override

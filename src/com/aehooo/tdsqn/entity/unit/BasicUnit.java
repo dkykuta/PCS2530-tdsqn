@@ -2,8 +2,6 @@ package com.aehooo.tdsqn.entity.unit;
 
 import org.andengine.entity.scene.Scene;
 
-import android.util.Log;
-
 import com.aehooo.tdsqn.annotations.Vel;
 import com.aehooo.tdsqn.entity.ICasterEntity;
 import com.aehooo.tdsqn.entity.ILiveEntity;
@@ -38,9 +36,9 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 	}
 
 	private void initializeConstants() {
-		this.hp = 10;
+		this.hp = 100;
 		this.maxHp = this.hp;
-		this.mp = 10;
+		this.mp = 100;
 		this.maxMp = this.mp;
 		this.terminouPercurso = false;
 
@@ -67,11 +65,9 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 
 	@Override
 	public boolean takeDamage(final int amount) {
-		Log.i("BasicUnit", "takeDamage 1");
 		if (this.isDead()) {
 			return false;
 		}
-		Log.i("BasicUnit", "takeDamage 2");
 		this.hp -= amount;
 		return true;
 	}

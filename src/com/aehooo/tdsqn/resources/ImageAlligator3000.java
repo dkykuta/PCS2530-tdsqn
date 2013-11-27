@@ -38,70 +38,6 @@ public class ImageAlligator3000 {
 	}
 
 	private static void loadTextures() {
-		ImageAlligator3000.newAtlas(2048, 1024);
-		{
-			// map1 1400 x 960
-			TextureRegion mapa1bg = BitmapTextureAtlasTextureRegionFactory
-					.createFromAsset(ImageAlligator3000.atlas,
-							ImageAlligator3000.bga,
-							"gfx/staticSprites/map1.png", 0, 0);
-			ImageAlligator3000.mapaTexturas.put(TextureName.MAPA1_BG, mapa1bg);
-		}
-		{
-			// barra_lateral 100 x 480
-			TextureRegion barraLateral = BitmapTextureAtlasTextureRegionFactory
-					.createFromAsset(ImageAlligator3000.atlas,
-							ImageAlligator3000.bga,
-							"gfx/staticSprites/barra_lateral.png", 1400, 0);
-			ImageAlligator3000.mapaTexturas.put(TextureName.BARRA_LATERAL,
-					barraLateral);
-		}
-		// newAtlas(1024, 1024);
-
-		{
-			TiledTextureRegion zombie = BitmapTextureAtlasTextureRegionFactory
-					.createTiledFromAsset(ImageAlligator3000.atlas,
-							ImageAlligator3000.bga,
-							"gfx/staticSprites/zombie.png", 1500, 0, 3, 4);
-			ImageAlligator3000.mapaTiledTexturas
-					.put(TextureName.ZOMBIE, zombie);
-		}
-		ImageAlligator3000.newAtlas(1024, 1024);
-		{
-			// group 180 x 60
-			TiledTextureRegion group = BitmapTextureAtlasTextureRegionFactory
-					.createTiledFromAsset(ImageAlligator3000.atlas,
-							ImageAlligator3000.bga,
-							"gfx/staticSprites/group.png", 0, 0, 3, 1);
-			ImageAlligator3000.mapaTiledTexturas.put(TextureName.GROUP, group);
-		}
-
-		{
-			// tiro1 5 x 5
-			TextureRegion tiro1 = BitmapTextureAtlasTextureRegionFactory
-					.createFromAsset(ImageAlligator3000.atlas,
-							ImageAlligator3000.bga,
-							"gfx/staticSprites/tiro1.png", 180, 0);
-			ImageAlligator3000.mapaTexturas.put(TextureName.TIRO, tiro1);
-		}
-		{
-			// button 80 x 80
-			TextureRegion button = BitmapTextureAtlasTextureRegionFactory
-					.createFromAsset(ImageAlligator3000.atlas,
-							ImageAlligator3000.bga,
-							"gfx/staticSprites/button.png", 50, 60);
-			ImageAlligator3000.mapaTexturas.put(TextureName.BUTTON, button);
-		}
-
-		{
-			// map1 1400 x 960
-			TextureRegion lost = BitmapTextureAtlasTextureRegionFactory
-					.createFromAsset(ImageAlligator3000.atlas,
-							ImageAlligator3000.bga,
-							"gfx/staticSprites/lostthegame.png", 0, 140);
-			ImageAlligator3000.mapaTexturas.put(TextureName.LOST, lost);
-		}
-
 		// imagens
 
 		// de
@@ -144,6 +80,22 @@ public class ImageAlligator3000 {
 							ImageAlligator3000.bga,
 							"gfx/newSprites/tela_perdeu.png", 1400, 480);
 			ImageAlligator3000.mapaTexturas.put(TextureName.LOST, texture);
+		}
+		{
+			// tela ganhou 400 x 200
+			TextureRegion texture = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/newSprites/tela_ganhou.png", 1400, 680);
+			ImageAlligator3000.mapaTexturas.put(TextureName.WIN, texture);
+		}
+		{
+			// button 80 x 80
+			TextureRegion texture = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/staticSprites/button.png", 1800, 480);
+			ImageAlligator3000.mapaTexturas.put(TextureName.BUTTON, texture);
 		}
 		{
 			TiledTextureRegion animacao = BitmapTextureAtlasTextureRegionFactory
@@ -191,6 +143,14 @@ public class ImageAlligator3000 {
 							1400, 880, 3, 1);
 			ImageAlligator3000.mapaTiledTexturas.put(TextureName.GROUP,
 					animacao);
+		}
+		{
+			// tiro1 5 x 5
+			TextureRegion tiro1 = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/staticSprites/tiro1.png", 1665, 440);
+			ImageAlligator3000.mapaTexturas.put(TextureName.TIRO, tiro1);
 		}
 
 		//

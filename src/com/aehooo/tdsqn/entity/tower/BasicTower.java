@@ -27,7 +27,7 @@ public abstract class BasicTower extends ActionEntity implements ILiveEntity {
 	}
 
 	private void initializeConstants() {
-		this.hp = 10;
+		this.hp = 200;
 		this.maxHp = this.hp;
 	}
 
@@ -47,7 +47,11 @@ public abstract class BasicTower extends ActionEntity implements ILiveEntity {
 
 	@Override
 	public boolean takeDamage(final int amount) {
-		return false;
+		if (this.isDead()) {
+			return false;
+		}
+		this.hp -= amount;
+		return true;
 	}
 
 	@Override

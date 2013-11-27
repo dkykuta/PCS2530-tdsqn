@@ -13,6 +13,11 @@ public class Tank extends BasicUnit {
 	}
 
 	@Override
+	public boolean takeDamage(final int amount) {
+		return super.takeDamage(amount / 2);
+	}
+
+	@Override
 	public String getName() {
 		return "Tank";
 	}
