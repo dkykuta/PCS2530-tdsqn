@@ -96,4 +96,15 @@ public class Action extends GameEntity implements IUpdatable {
 			}
 		});
 	}
+
+	public void heal(final int amount, final int mpCost) {
+		this.parts.add(new ActionPart(this.origin, this.target) {
+
+			@Override
+			public void execute() {
+				Action.this.target.receiveHeal(amount);
+			}
+
+		});
+	}
 }

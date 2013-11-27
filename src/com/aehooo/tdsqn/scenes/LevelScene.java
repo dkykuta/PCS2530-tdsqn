@@ -10,13 +10,16 @@ import org.andengine.input.touch.TouchEvent;
 
 import android.util.Log;
 
+import com.aehooo.tdsqn.entity.IUpdatable;
 import com.aehooo.tdsqn.entity.action.Action;
+import com.aehooo.tdsqn.entity.button.LostTheGameBanner;
 import com.aehooo.tdsqn.entity.button.UnitButton;
 import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.entity.impl.ListOfEntity;
 import com.aehooo.tdsqn.entity.tower.BasicTower;
 import com.aehooo.tdsqn.entity.tower.TowerOne;
 import com.aehooo.tdsqn.entity.tower.TowerTwo;
+import com.aehooo.tdsqn.entity.unit.Healer;
 import com.aehooo.tdsqn.entity.unit.Zombie;
 import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.manager.UpdateManager;
@@ -25,7 +28,9 @@ import com.aehooo.tdsqn.resources.ImageAlligator3000;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.scenes.composition.LevelBackground;
 
-public class LevelScene extends Scene {
+public class LevelScene extends Scene implements IUpdatable {
+
+	private static final int MAX_GROUPS = 3;
 
 	private Sprite bg;
 	private Sprite barraLateral;
@@ -35,11 +40,14 @@ public class LevelScene extends Scene {
 	private ListOfEntity<Group> groups;
 	private ListOfEntity<BasicTower> towers;
 
+	private int nGroups;
+
 	public LevelScene(final TextureName bgname) {
 		super();
 		LevelManager.changeLevelScene(this);
 
 		this.updateManager = new UpdateManager();
+		this.nGroups = 0;
 
 		LevelManager.setUpdateManager(this.updateManager);
 
@@ -66,6 +74,8 @@ public class LevelScene extends Scene {
 
 		this.registerUpdateHandler(this.updateManager);
 
+		this.updateManager.addUpdatable(this);
+
 		//
 		// SETTING TOUCH
 		//
@@ -80,8 +90,22 @@ public class LevelScene extends Scene {
 		return this.groups.getList();
 	}
 
+	public List<BasicTower> getTowers() {
+		return this.towers.getList();
+	}
+
 	public void addGroup(final Group g) {
+		this.nGroups++;
 		this.groups.addEntity(g);
+	}
+
+	public Group getUninitializedGroup() throws Exception {
+		Group g = this.groups.getLast();
+		if (((g == null) || g.isInitialized()) && (this.nGroups < MAX_GROUPS)) {
+			g = new Group(this, this.path);
+			this.addGroup(g);
+		}
+		return g;
 	}
 
 	public List<Action> getActions() {
@@ -105,14 +129,6 @@ public class LevelScene extends Scene {
 	}
 
 	private void createTestUnits() {
-		Group g;
-		try {
-			g = new Group(this, this.path);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
-		}
-		this.groups.addEntity(g);
 
 		try {
 			BasicTower t = new TowerOne(this, 200, 200);
@@ -127,13 +143,17 @@ public class LevelScene extends Scene {
 		try {
 			UnitButton b = new UnitButton(this, Zombie.class, 10, 10);
 			LevelManager.attachOnSideBar(b);
+
+			b = new UnitButton(this, Healer.class, 10, 100);
+			b.getSprite().setGreen(0.2f);
+			LevelManager.attachOnSideBar(b);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void initializeBasicScreen(final TextureName bgname) {
-		this.bg = new LevelBackground(-600, -480, ImageAlligator3000
+		this.bg = new LevelBackground(-600, 0, ImageAlligator3000
 				.getTexture(bgname));
 
 		// Movimentação inicial: efeito
@@ -153,5 +173,25 @@ public class LevelScene extends Scene {
 			}
 		};
 		this.attachChild(this.barraLateral);
+	}
+
+	@Override
+	public void onFrameUpdate() {
+		if ((this.nGroups == MAX_GROUPS) && this.groups.getList().isEmpty()
+				&& !LevelManager.isWinner()) {
+			try {
+				LostTheGameBanner lost = new LostTheGameBanner(this, 200, 140);
+				LevelManager.attachOnScreen((Sprite) lost.getSprite());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	@Override
+	public void onCheckDead() {
+		// TODO Auto-generated method stub
+
 	}
 }

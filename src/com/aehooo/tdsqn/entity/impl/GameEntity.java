@@ -3,14 +3,18 @@ package com.aehooo.tdsqn.entity.impl;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.entity.sprite.AnimatedSprite.IAnimationListener;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
+
+import android.util.Log;
 
 import com.aehooo.tdsqn.annotations.TextureInfo;
 import com.aehooo.tdsqn.entity.IThisGameSprite;
 import com.aehooo.tdsqn.entity.ITouchHandler;
 import com.aehooo.tdsqn.entity.IUpdatable;
+import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
 import com.aehooo.tdsqn.resources.TextureName;
@@ -59,7 +63,7 @@ public abstract class GameEntity implements IUpdatable {
 				this.setSprite(new ThisGameAnimatedSprite(pos.getXasInt(), pos
 						.getYasInt(), tiledTexture));
 				this.animated = true;
-				this.animateLinha(0);
+				this.animateLine(0);
 			} else if (texture != null) {
 				this.setSprite(new ThisGameSprite(pos.getXasInt(), pos
 						.getYasInt(), texture));
@@ -78,6 +82,9 @@ public abstract class GameEntity implements IUpdatable {
 							pTouchAreaLocalX, pTouchAreaLocalY);
 				}
 			});
+			if (this instanceof Group) {
+				Log.i("GameEntity", "Group registrando!");
+			}
 			fScene.registerTouchArea(this.getSprite());
 		}
 	}
@@ -159,7 +166,49 @@ public abstract class GameEntity implements IUpdatable {
 		}
 	}
 
-	public void animateLinha(final int line) {
+	protected void animateOnce(final long[] pFrameDurations, final int[] pFrames) {
+		if (this.animated) {
+			final AnimatedSprite aSprite = (AnimatedSprite) this.sprite;
+			aSprite.animate(pFrameDurations, pFrames, false,
+					new IAnimationListener() {
+
+						@Override
+						public void onAnimationStarted(
+								final AnimatedSprite pAnimatedSprite,
+								final int pInitialLoopCount) {
+
+						}
+
+						@Override
+						public void onAnimationLoopFinished(
+								final AnimatedSprite pAnimatedSprite,
+								final int pRemainingLoopCount,
+								final int pInitialLoopCount) {
+
+						}
+
+						@Override
+						public void onAnimationFrameChanged(
+								final AnimatedSprite pAnimatedSprite,
+								final int pOldFrameIndex,
+								final int pNewFrameIndex) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void onAnimationFinished(
+								final AnimatedSprite pAnimatedSprite) {
+							int last = GameEntity.this.lastAnimatedLine;
+							GameEntity.this.lastAnimatedLine = -1;
+							GameEntity.this.animateLine(last);
+						}
+					});
+		}
+
+	}
+
+	public void animateLine(final int line) {
 		if (line == this.lastAnimatedLine) {
 			return;
 		}
@@ -173,6 +222,21 @@ public abstract class GameEntity implements IUpdatable {
 		}
 		this.lastAnimatedLine = line;
 		this.animate(duracoes, frames);
+	}
+
+	public void animateOnce(final int line) {
+		if (line == this.lastAnimatedLine) {
+			return;
+		}
+		long[] duracoes = new long[this.colunas];
+		for (int i = 0; i < this.colunas; i++) {
+			duracoes[i] = 100;
+		}
+		int[] frames = new int[this.colunas];
+		for (int i = 0; i < this.colunas; i++) {
+			frames[i] = (line * this.colunas) + i;
+		}
+		this.animateOnce(duracoes, frames);
 	}
 
 }

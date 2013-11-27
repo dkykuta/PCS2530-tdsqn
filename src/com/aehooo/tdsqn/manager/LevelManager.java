@@ -38,4 +38,8 @@ public class LevelManager {
 		LevelManager.updateManager = updateManager;
 	}
 
+	public static boolean isWinner() {
+		return false;
+	}
+
 }

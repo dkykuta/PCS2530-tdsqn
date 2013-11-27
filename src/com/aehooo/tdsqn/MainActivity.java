@@ -7,6 +7,7 @@ import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
+import com.aehooo.tdsqn.manager.GameManager;
 import com.aehooo.tdsqn.resources.ImageAlligator3000;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.scenes.LevelScene;
@@ -28,8 +29,8 @@ public class MainActivity extends SimpleBaseGameActivity {
 
 	@Override
 	protected void onCreateResources() {
-		// TODO Auto-generated method stub
 		ImageAlligator3000.initialize(this);
+		GameManager.registerMainActivity(this);
 	}
 
 	@Override

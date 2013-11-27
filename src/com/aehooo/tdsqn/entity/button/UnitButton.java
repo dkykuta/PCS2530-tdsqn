@@ -6,9 +6,9 @@ import org.andengine.input.touch.TouchEvent;
 import android.util.Log;
 
 import com.aehooo.tdsqn.annotations.TextureInfo;
+import com.aehooo.tdsqn.entity.group.Group;
 import com.aehooo.tdsqn.entity.impl.GameEntity;
 import com.aehooo.tdsqn.entity.unit.BasicUnit;
-import com.aehooo.tdsqn.entity.unit.Zombie;
 import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.resources.TextureName;
 import com.aehooo.tdsqn.scenes.LevelScene;
@@ -49,16 +49,17 @@ public class UnitButton extends GameEntity {
 			return true;
 		}
 		LevelScene level = LevelManager.getCurrentLevelScene();
-		Zombie zz;
 		BasicUnit u;
 		try {
 			u = this.clazz.newInstance();
-			// zz = new Zombie();
+			Group g = level.getUninitializedGroup();
+			if (g != null) {
+				g.addUnit(u);
+			}
 		} catch (Exception e) {
 			Log.e("LevelScene", "Zombie com erro", e);
 			return false;
 		}
-		level.getGroups().get(0).addUnit(u);
 		return true;
 	}
 }

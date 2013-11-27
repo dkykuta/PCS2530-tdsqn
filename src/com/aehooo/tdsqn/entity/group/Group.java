@@ -45,8 +45,12 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 	}
 
+	public boolean isInitialized() {
+		return this.initialized;
+	}
+
 	@Override
-	public void animateLinha(final int linha) {
+	public void animateLine(final int linha) {
 		long[] duracoes = new long[4];
 		for (int i = 0; i < 4; i++) {
 			duracoes[i] = 400;

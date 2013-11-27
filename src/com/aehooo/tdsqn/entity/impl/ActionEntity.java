@@ -17,6 +17,7 @@ import com.aehooo.tdsqn.entity.ITargetEntity;
 import com.aehooo.tdsqn.entity.IUpdatable;
 import com.aehooo.tdsqn.entity.action.Action;
 import com.aehooo.tdsqn.entity.group.Group;
+import com.aehooo.tdsqn.entity.tower.BasicTower;
 import com.aehooo.tdsqn.enums.GameTargetType;
 import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.utils.Vector2D;
@@ -77,7 +78,14 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 				pTargets.addAll(g.getUnits());
 			}
 		} else if (type == GameTargetType.TOWER) {
-
+			List<BasicTower> towers = LevelManager.getCurrentLevelScene()
+					.getTowers();
+			for (BasicTower t : towers) {
+				if (Vector2D.dist(this.getCenterInGameWindow(), t
+						.getCenterInGameWindow()) < this.range) {
+					pTargets.add(t);
+				}
+			}
 		}
 
 		return pTargets;
@@ -105,10 +113,23 @@ public abstract class ActionEntity extends GameEntity implements ILiveEntity,
 		if (buildAction == null) {
 			return false;
 		}
-		List<? extends ITargetEntity> possibleTargets = this
+		List<ITargetEntity> possibleTargets = (List<ITargetEntity>) this
 				.getPossibleTargets(type);
 
-		if (!possibleTargets.isEmpty()) {
+		List<ITargetEntity> filteredTargets;
+
+		if (filter != null) {
+			filteredTargets = new ArrayList<ITargetEntity>();
+			for (ITargetEntity e : possibleTargets) {
+				if ((Boolean) filter.invoke(this, e)) {
+					filteredTargets.add(e);
+				}
+			}
+		} else {
+			filteredTargets = possibleTargets;
+		}
+
+		if (!filteredTargets.isEmpty()) {
 			Action action = new Action(LevelManager.getCurrentLevelScene(),
 					this, possibleTargets.get(0));
 			buildAction.invoke(this, action);

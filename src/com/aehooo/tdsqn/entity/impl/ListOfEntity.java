@@ -28,6 +28,13 @@ public class ListOfEntity<E extends GameEntity> implements IUpdatable {
 		return this.list;
 	}
 
+	public E getLast() {
+		if (this.list.isEmpty()) {
+			return null;
+		}
+		return this.list.get(this.list.size() - 1);
+	}
+
 	@Override
 	public void onFrameUpdate() {
 		List<E> toRemove = new ArrayList<E>();

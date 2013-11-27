@@ -8,4 +8,5 @@ public interface ITargetEntity extends IGameEntity {
 
 	public boolean slow(final ILiveEntity origin, final double pctg,
 			final int framesDur);
+
 }

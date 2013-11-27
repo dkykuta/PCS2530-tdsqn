@@ -44,8 +44,7 @@ public class ImageAlligator3000 {
 			TextureRegion mapa1bg = BitmapTextureAtlasTextureRegionFactory
 					.createFromAsset(ImageAlligator3000.atlas,
 							ImageAlligator3000.bga,
-							"gfx/staticSprites/map1.png",
-							0, 0);
+							"gfx/staticSprites/map1.png", 0, 0);
 			ImageAlligator3000.mapaTexturas.put(TextureName.MAPA1_BG, mapa1bg);
 		}
 		{
@@ -69,7 +68,7 @@ public class ImageAlligator3000 {
 		}
 		ImageAlligator3000.newAtlas(1024, 1024);
 		{
-			// barra_lateral 100 x 480
+			// group 180 x 60
 			TiledTextureRegion group = BitmapTextureAtlasTextureRegionFactory
 					.createTiledFromAsset(ImageAlligator3000.atlas,
 							ImageAlligator3000.bga,
@@ -82,8 +81,7 @@ public class ImageAlligator3000 {
 			TextureRegion tiro1 = BitmapTextureAtlasTextureRegionFactory
 					.createFromAsset(ImageAlligator3000.atlas,
 							ImageAlligator3000.bga,
-							"gfx/staticSprites/tiro1.png",
-							180, 0);
+							"gfx/staticSprites/tiro1.png", 180, 0);
 			ImageAlligator3000.mapaTexturas.put(TextureName.TIRO, tiro1);
 		}
 		{
@@ -91,18 +89,25 @@ public class ImageAlligator3000 {
 			TextureRegion torre1 = BitmapTextureAtlasTextureRegionFactory
 					.createFromAsset(ImageAlligator3000.atlas,
 							ImageAlligator3000.bga,
-							"gfx/staticSprites/torre1.png",
-							0, 60);
+							"gfx/staticSprites/torre1.png", 0, 60);
 			ImageAlligator3000.mapaTexturas.put(TextureName.TORRE1, torre1);
 		}
 		{
-			// map1 1400 x 960
+			// button 80 x 80
 			TextureRegion button = BitmapTextureAtlasTextureRegionFactory
 					.createFromAsset(ImageAlligator3000.atlas,
 							ImageAlligator3000.bga,
-							"gfx/staticSprites/button.png",
-							50, 60);
+							"gfx/staticSprites/button.png", 50, 60);
 			ImageAlligator3000.mapaTexturas.put(TextureName.BUTTON, button);
+		}
+
+		{
+			// map1 1400 x 960
+			TextureRegion lost = BitmapTextureAtlasTextureRegionFactory
+					.createFromAsset(ImageAlligator3000.atlas,
+							ImageAlligator3000.bga,
+							"gfx/staticSprites/lostthegame.png", 0, 140);
+			ImageAlligator3000.mapaTexturas.put(TextureName.LOST, lost);
 		}
 
 		// house1 350 x 350

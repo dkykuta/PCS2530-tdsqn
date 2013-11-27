@@ -75,7 +75,16 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 
 	@Override
 	public boolean receiveHeal(final int amount) {
-		return false;
+		this.getSprite().setBlue(0);
+		this.getSprite().setRed(0);
+		if (this.hp == this.maxHp) {
+			return false;
+		}
+		this.hp += amount;
+		if (this.hp > this.maxHp) {
+			this.hp = this.maxHp;
+		}
+		return true;
 	}
 
 	@Override
@@ -113,6 +122,7 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 
 	@Override
 	public void onFrameUpdate() {
+		super.onFrameUpdate();
 		if (this.hp <= 0) {
 			this.shouldDie();
 		}
@@ -132,19 +142,19 @@ public abstract class BasicUnit extends ActionEntity implements ILiveEntity,
 			// movimento na horizontal
 			if (diff.getX() > 0) {
 				// movimento para a direita
-				this.animateLinha(BasicUnit.NORMAL_DIREITA);
+				this.animateLine(BasicUnit.NORMAL_DIREITA);
 			} else if (diff.getX() < 0) {
 				// movimento para a esquerda
-				this.animateLinha(BasicUnit.NORMAL_ESQUERDA);
+				this.animateLine(BasicUnit.NORMAL_ESQUERDA);
 			}
 		} else if (diff.getX() == 0) {
 			// movimento na vertical
 			if (diff.getY() > 0) {
 				// movimento para baixo
-				this.animateLinha(BasicUnit.NORMAL_BAIXO);
+				this.animateLine(BasicUnit.NORMAL_BAIXO);
 			} else if (diff.getY() < 0) {
 				// movimento para cima
-				this.animateLinha(BasicUnit.NORMAL_CIMA);
+				this.animateLine(BasicUnit.NORMAL_CIMA);
 			}
 		}
 	}

@@ -28,5 +28,5 @@ public interface IGameEntity {
 	public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
 			final float pTouchAreaLocalX, final float pTouchAreaLocalY);
 
-	public void animateLinha(final int line);
+	public void animateLine(final int line);
 }

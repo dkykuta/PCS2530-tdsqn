@@ -53,6 +53,6 @@ public class LevelBackground extends ThisGameSprite {
 			this.setPosition(newx, newy);
 		}
 
-		return true;
+		return false;
 	}
 }
