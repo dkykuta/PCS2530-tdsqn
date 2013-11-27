@@ -94,7 +94,7 @@ public class ImageAlligator3000 {
 			TextureRegion texture = BitmapTextureAtlasTextureRegionFactory
 					.createFromAsset(ImageAlligator3000.atlas,
 							ImageAlligator3000.bga,
-							"gfx/staticSprites/button.png", 1800, 480);
+							"gfx/newSprites/button.png", 1800, 480);
 			ImageAlligator3000.mapaTexturas.put(TextureName.BUTTON, texture);
 		}
 		{

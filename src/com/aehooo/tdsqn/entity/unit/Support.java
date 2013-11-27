@@ -5,7 +5,7 @@ import com.aehooo.tdsqn.annotations.Vel;
 import com.aehooo.tdsqn.resources.TextureName;
 
 @TextureInfo(name = TextureName.SUPPORT, linhas = 4)
-@Vel(0.5)
+@Vel(0.9)
 public class Support extends BasicUnit {
 
 	public Support() throws Exception {

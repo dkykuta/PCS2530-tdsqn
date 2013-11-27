@@ -6,7 +6,7 @@ import com.aehooo.tdsqn.manager.LevelManager;
 import com.aehooo.tdsqn.resources.TextureName;
 
 @TextureInfo(name = TextureName.REI, linhas = 4)
-@Vel(2)
+@Vel(0.5)
 public class Rei extends BasicUnit {
 
 	public Rei() throws Exception {

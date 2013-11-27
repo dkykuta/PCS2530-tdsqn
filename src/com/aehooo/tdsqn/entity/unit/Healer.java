@@ -13,7 +13,7 @@ import com.aehooo.tdsqn.resources.TextureName;
 
 @TextureInfo(name = TextureName.HEALER, linhas = 4)
 @APS(0.2)
-@Vel(2)
+@Vel(1.2)
 public class Healer extends BasicUnit {
 
 	public Healer() throws Exception {

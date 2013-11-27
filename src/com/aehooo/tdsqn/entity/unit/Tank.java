@@ -5,7 +5,7 @@ import com.aehooo.tdsqn.annotations.Vel;
 import com.aehooo.tdsqn.resources.TextureName;
 
 @TextureInfo(name = TextureName.TANK, linhas = 4)
-@Vel(0.5)
+@Vel(0.7)
 public class Tank extends BasicUnit {
 
 	public Tank() throws Exception {

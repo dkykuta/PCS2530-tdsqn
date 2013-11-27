@@ -65,6 +65,14 @@ public abstract class BasicTower extends ActionEntity implements ILiveEntity {
 		return false;
 	}
 
+	@Override
+	public void onFrameUpdate() {
+		super.onFrameUpdate();
+		if (this.hp <= 0) {
+			this.shouldDie();
+		}
+	}
+
 	/*
 	 * Meu
 	 */

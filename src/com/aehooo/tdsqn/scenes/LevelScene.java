@@ -142,10 +142,13 @@ public class LevelScene extends Scene implements IUpdatable {
 			t = new TowerBanana(this, 475, 550);
 			this.towers.addEntity(t);
 
-			t = new TowerMelancia(this, 850, 0);
+			t = new TowerMelancia(this, 750, 0);
 			this.towers.addEntity(t);
 
-			t = new TowerBanana(this, 1000, 0);
+			t = new TowerBanana(this, 900, 0);
+			this.towers.addEntity(t);
+
+			t = new TowerMelancia(this, 1050, 0);
 			this.towers.addEntity(t);
 		} catch (Exception e) {
 			Log.i("LevelScene", "OneTower exception", e);
@@ -157,15 +160,19 @@ public class LevelScene extends Scene implements IUpdatable {
 			LevelManager.attachOnSideBar(b);
 
 			b = new UnitButton(this, Healer.class, 10, 100);
+			b.getSprite().setColor(0.7f, 0.8f, 1f);
 			LevelManager.attachOnSideBar(b);
 
 			b = new UnitButton(this, Dps.class, 10, 190);
+			b.getSprite().setColor(0.7f, 1f, 0.8f);
 			LevelManager.attachOnSideBar(b);
 
 			b = new UnitButton(this, Support.class, 10, 280);
+			b.getSprite().setColor(1f, 0.7f, 1f);
 			LevelManager.attachOnSideBar(b);
 
 			b = new ReiButton(this, Rei.class, 10, 370);
+			b.getSprite().setColor(1f, 1f, 0.7f);
 			LevelManager.attachOnSideBar(b);
 		} catch (Exception e) {
 			e.printStackTrace();
