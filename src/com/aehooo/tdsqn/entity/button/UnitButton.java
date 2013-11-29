@@ -58,7 +58,7 @@ public class UnitButton extends GameEntity {
 	public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
 			final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
 		if (!pSceneTouchEvent.isActionDown()) {
-			return true;
+			return false;
 		}
 		LevelScene level = LevelManager.getCurrentLevelScene();
 		BasicUnit u;
@@ -66,12 +66,12 @@ public class UnitButton extends GameEntity {
 			u = this.clazz.newInstance();
 			Group g = level.getUninitializedGroup();
 			if (g != null) {
-				g.addUnit(u);
+				return g.addUnit(u);
 			}
 		} catch (Exception e) {
 			Log.e("LevelScene", "Zombie com erro", e);
 			return false;
 		}
-		return true;
+		return false;
 	}
 }

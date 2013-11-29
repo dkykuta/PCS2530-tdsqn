@@ -25,7 +25,13 @@ public class ListOfEntity<E extends GameEntity> implements IUpdatable {
 	}
 
 	public List<E> getList() {
-		return this.list;
+		List<E> ret = new ArrayList<E>();
+		for (E e : this.list) {
+			if (!e.isDead()) {
+				ret.add(e);
+			}
+		}
+		return ret;
 	}
 
 	public E getLast() {
@@ -37,15 +43,8 @@ public class ListOfEntity<E extends GameEntity> implements IUpdatable {
 
 	@Override
 	public void onFrameUpdate() {
-		List<E> toRemove = new ArrayList<E>();
 		for (E e : this.list) {
 			e.onFrameUpdate();
-			if (e.isDead()) {
-				toRemove.add(e);
-			}
-		}
-		for (E e : toRemove) {
-			this.removeEntity(e);
 		}
 	}
 

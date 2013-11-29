@@ -8,8 +8,6 @@ import java.util.Map;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
-import android.util.Log;
-
 import com.aehooo.tdsqn.annotations.TextureInfo;
 import com.aehooo.tdsqn.entity.ILiveEntity;
 import com.aehooo.tdsqn.entity.ITargetEntity;
@@ -99,8 +97,11 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 		}
 
 		for (Group g : LevelManager.getCurrentLevelScene().getGroups()) {
-			if ((this != g) && this.getSprite().collidesWith(g.getSprite())
-					&& g.isAhead(this)) {
+			if (g.isDead()) {
+				continue;
+			}
+			double dist = Vector2D.dist(this.getPos(), g.getPos());
+			if ((this != g) && (dist <= 100) && g.isAhead(this)) {
 				return;
 			}
 		}
@@ -114,16 +115,12 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 			this.setPos(nextPoint);
 			this.nextPointIdx++;
-			Log.i("Group", "pre teste");
 			if (this.nextPointIdx >= this.path.size()) {
-				Log.i("Group", "acabou");
 				this.direction = null;
 				for (BasicUnit u : this.unidades) {
 					u.setTerminouPercurso(true);
 				}
-				Log.i("Group", "shouldDie");
 				this.shouldDie();
-				Log.i("Group", "returning");
 				return;
 			}
 			this.direction = this.path.getDir(this.nextPointIdx - 1,
@@ -135,10 +132,10 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 		}
 	}
 
-	public void addUnit(final BasicUnit u) {
+	public boolean addUnit(final BasicUnit u) {
 		int n = this.unidades.size();
 		if (this.initialized || (u == null) || (n >= 4)) {
-			return;
+			return false;
 		}
 
 		u.setPos(((n / 2) * 40), ((n % 2) * 40));
@@ -147,6 +144,7 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 		this.getSprite().attachChild(u.getSprite());
 
+		return true;
 	}
 
 	public List<BasicUnit> getUnits() {
@@ -172,9 +170,11 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 
 	@Override
 	public void shouldDie() {
+
 		for (BasicUnit u : this.unidades) {
 			u.shouldDie();
 		}
+
 		super.shouldDie();
 	}
 
@@ -211,10 +211,9 @@ public class Group extends GameEntity implements IUpdatable, ITargetEntity {
 	@Override
 	public boolean takeDamage(final int amount) {
 		for (BasicUnit u : this.unidades) {
-			u.getSprite().detachSelf();
+			u.takeDamage(amount);
 		}
-		this.unidades.clear();
-		return false;
+		return true;
 	}
 
 	@Override
